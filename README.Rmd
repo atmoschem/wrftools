@@ -17,7 +17,7 @@ get the perfect domains. This functions solves this part while providing
 a dynamic maps for actually viewing where are your domains. 
 
 ## System requirements
-You need [sf]((https://github.com/r-spatial/sf)) and [mapview](https://github.com/r-spatial/mapview) from [r-spatial](https://github.com/r-spatial/). 
+You need [sf](https://github.com/r-spatial/sf) and [mapview](https://github.com/r-spatial/mapview) from [r-spatial](https://github.com/r-spatial/). 
 
 
 ## Install
