@@ -27,6 +27,11 @@ devtools::install_github("ibarraespinosa/wrftools")
 
 ## Example
 
+wrf_domaisn returns a list of:
+
+1. the map
+2. the sf object
+
 ```{r}
 library(wrftools)
 a <- wrf_domains()
