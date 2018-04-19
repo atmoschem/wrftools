@@ -76,12 +76,6 @@ wrf_domains <- function(max_dom = 3,
                   ...
                   ) {
 
-  dxd01 = dx/dtm # meters
-  dyd01 = dy/dtm # meters
-  dxd02 = dx/parent_grid_ratio[2]/dtm # meters
-  dyd02 = dy/parent_grid_ratio[2]/dtm # meters
-  dxd03 = dx/parent_grid_ratio[2]/parent_grid_ratio[3]/dtm # meters
-  dyd03 = dy/parent_grid_ratio[2]/parent_grid_ratio[3]/dtm # meters
   if(map_proj == "lambert"){
     crs = 4326
   } else {
@@ -93,6 +87,8 @@ wrf_domains <- function(max_dom = 3,
   x <- st_coordinates(centro) [, 1]
   y <- st_coordinates(centro) [, 2]
   if(max_dom == 1){
+    dxd01 = dx/dtm # meters
+    dyd01 = dy/dtm # meters
     # d01
     xmind01 <- x - dxd01*e_we[1]/2
     ymind01 <- y - dxd01*e_sn[1]/2
@@ -108,6 +104,10 @@ wrf_domains <- function(max_dom = 3,
       return(mapview(doms, alpha.regions = 0, ...))
 
   } else if(max_dom == 2){
+    dxd01 = dx/dtm # meters
+    dyd01 = dy/dtm # meters
+    dxd02 = dx/parent_grid_ratio[2]/dtm # meters
+    dyd02 = dy/parent_grid_ratio[2]/dtm # meters
     # d01
     xmind01 <- x - dxd01*e_we[1]/2
     ymind01 <- y - dxd01*e_sn[1]/2
@@ -135,6 +135,12 @@ wrf_domains <- function(max_dom = 3,
     return(list(mapview(doms, alpha.regions = 0, ...), doms))
 
   } else if(max_dom == 3){
+    dxd01 = dx/dtm # meters
+    dyd01 = dy/dtm # meters
+    dxd02 = dx/parent_grid_ratio[2]/dtm # meters
+    dyd02 = dy/parent_grid_ratio[2]/dtm # meters
+    dxd03 = dx/parent_grid_ratio[2]/parent_grid_ratio[3]/dtm # meters
+    dyd03 = dy/parent_grid_ratio[2]/parent_grid_ratio[3]/dtm # meters
     # d01
     xmind01 <- x - dxd01*e_we[1]/2
     ymind01 <- y - dxd01*e_sn[1]/2
@@ -148,8 +154,8 @@ wrf_domains <- function(max_dom = 3,
     # d03
     xmind03 <- xmind02 + i_parent_start[3]*dxd02
     ymind03 <- ymind02 + j_parent_start[3]*dxd02
-    xmaxd03 <- xmind03 + dxd02*e_we[3]
-    ymaxd03 <- ymind03 + dxd02*e_sn[3]
+    xmaxd03 <- xmind03 + dxd03*e_we[3]
+    ymaxd03 <- ymind03 + dxd03*e_sn[3]
     p01 = st_sf(d = 1, geometry = st_sfc(
       st_polygon(
         list(cbind(c(xmind01,xmaxd01,xmaxd01,xmind01,xmind01),    # x
@@ -170,6 +176,14 @@ wrf_domains <- function(max_dom = 3,
     return(list(mapview(doms, alpha.regions = 0, ...), doms))
 
   } else if(max_dom == 4){
+    dxd01 = dx/dtm # meters
+    dyd01 = dy/dtm # meters
+    dxd02 = dx/parent_grid_ratio[2]/dtm # meters
+    dyd02 = dy/parent_grid_ratio[2]/dtm # meters
+    dxd03 = dx/parent_grid_ratio[2]/parent_grid_ratio[3]/dtm # meters
+    dyd03 = dy/parent_grid_ratio[2]/parent_grid_ratio[3]/dtm # meters
+    dxd04 = dx/parent_grid_ratio[2]/parent_grid_ratio[3]/parent_grid_ratio[4]/dtm # meters
+    dyd04 = dy/parent_grid_ratio[2]/parent_grid_ratio[3]/parent_grid_ratio[4]/dtm # meters
     # d01
     xmind01 <- x - dxd01*e_we[1]/2
     ymind01 <- y - dxd01*e_sn[1]/2
@@ -188,8 +202,8 @@ wrf_domains <- function(max_dom = 3,
     # d04
     xmind04 <- xmind03 + i_parent_start[4]*dxd03
     ymind04 <- ymind03 + j_parent_start[4]*dxd03
-    xmaxd04 <- xmind04 + dxd03*e_we[4]
-    ymaxd04 <- ymind04 + dxd03*e_sn[4]
+    xmaxd04 <- xmind04 + dxd04*e_we[4]
+    ymaxd04 <- ymind04 + dxd04*e_sn[4]
 
     p01 = st_sf(d = 1, geometry = st_sfc(
       st_polygon(

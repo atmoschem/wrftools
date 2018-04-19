@@ -32,6 +32,9 @@ wrf_domains returns a list of:
 1. the map
 2. the sf object
 
+The arguments of wrf_domains are the same arguments of namelist.wps.
+IT include default values but you can change them accordingly.
+
 ```{r}
 library(wrftools)
 a <- wrf_domains()
