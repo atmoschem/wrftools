@@ -1,0 +1,42 @@
+---
+title: "wrftools"
+author: "Sergio Ibarra-Espinosa"
+date: "April 19, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## wrftools
+
+I'm not an expert in WRF but i need to use it. One of the very frustating and
+tricky part was to make a correct namelist.wps. Hours and hours trying to
+get the perfect domains. This functions solves this part while providing
+a dynamic maps for actually viewing where are your domains. 
+
+## System requirements
+You need [sf]((https://github.com/r-spatial/sf)) and [mapview](https://github.com/r-spatial/mapview) from [r-spatial](https://github.com/r-spatial/). 
+
+
+## Install
+```{r eval = FALSE}
+devtools::install_github("ibarraespinosa/wrftools")
+```
+
+## Example
+
+```{r}
+library(wrftools)
+a <- wrf_domains()
+a[[1]] # mapview
+```
+
+![](https://i.imgur.com/7giwGp6.png)
+
+## Contributing
+
+If you see any errors and know how to improve the function, or add new functions
+write an issue and a pull request, please. I will be ver grateful, for sure,
+100%.
