@@ -1,16 +1,12 @@
 Package: wrftools
 Type: Package
 Title: Provide tools such as plots and others to the WRF user
-Version: 0.2.0
-Authors@R: c(
-  person(given = "Sergio", family = "Ibarra-Espinosa",
-        role = c("aut", "cre"),
-        email = "sergio.ibarra@usp.br",
-        comment = c(ORCID = "0000-0002-3162-1905"))) 
+Version: 0.2.1
+Authors@R: c(person(given = "Sergio", family = "Ibarra-Espinosa", role = c("aut", "cre"), email = "sergio.ibarra@usp.br", comment = c(ORCID = "0000-0002-3162-1905")))
 Description: It provide tools to the WRF use. The first tool is ploting the namelist.wps information in a dynamic map.
-URL: https://github.com/ibarraespinosa/wrftools
-BugReports: https://github.com/ibarraespinosa/wrftools/issues/
-Imports: sf, mapview, eixport, ncdf4, raster, tidyr, methods
+URL: https://github.com/atmoschem/wrftools
+BugReports: https://github.com/atmoschem/wrftools/issues/
+Imports: sf, mapview, eixport, ncdf4, raster, tidyr, methods, lattice
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

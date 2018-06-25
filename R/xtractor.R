@@ -24,7 +24,7 @@
 #' data(cetesb)
 #' #use your wrfout
 #' #wrf <- "~/Documentos/wrfo/wrfoA.nc"
-#' t2 = c("T2", "o3")
+#' t2 = c("T2", "o3", "no")
 #' df <- xtractor(atmos = wrf, vars = t2, points = cetesb[1:3, ],
 #' stations = cetesb$Station[1:3])
 #' r <- xtractor(atmos = wrf, vars = t2, points = cetesb[1, ], return_list = T)
@@ -34,6 +34,8 @@ xtractor <- function(atmos, vars, level = 1,
                      crs_points = 4326,
                      model = "WRF",
                      return_list = FALSE) {
+  message("adding name of stations currently nor supported\n")
+  message("Use points of one row")
 
   # NetCDF
   xx <- ncdf4::nc_open(atmos)
@@ -68,6 +70,8 @@ xtractor <- function(atmos, vars, level = 1,
     lr[[i]] <- rx
   }
   names(lr) <- vars
+  print(length(lr))
+
   # stations
   if(class(points)[1] == "matrix" | class(points)[1] == "data.frame"){
     points <- as.data.frame(points)
@@ -104,12 +108,14 @@ xtractor <- function(atmos, vars, level = 1,
   #    dft[[i]]$Station[i] = points$Station[i]
   #  }
   # dft <- do.call("cbind", dft)
-  if(length(dft) == 1){
-    dft = do.call("cbind", dft)
-  } else{
-    for(i in 2:length(dft) ) {
-      dft <- cbind(dft[[1]], dft[[i]][, 2])
-    }
+  # dft = do.call("cbind", dft)
+  # dft <- cbind(dft[[1]])
+
+    if(length(dft) > 1){
+      dft = do.call("cbind", dft)
+      dft[, seq(3, length(vars)*2-1, 2)] <- NULL # remove repeated time
+    } else {
+      dft = do.call("cbind", dft)
   }
 
    names(dft) <- c("Time", vars)

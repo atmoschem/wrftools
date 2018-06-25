@@ -55,7 +55,7 @@ Which returns data.frame ready for ggplot2. The class of Time is POSIXct
 data(cetesb)
 #use your wrfout
 wrf <- "~/Documentos/wrfo/wrfoA.nc"
-t2 = c("T2", "o3")
+t2 = c("T2", "o3", "no", "no2")
 df <- xtractor(atmos = wrf, vars = t2, points = cetesb[1:3, ],
 stations = cetesb$Station[1:3])
 ```
