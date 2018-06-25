@@ -80,7 +80,7 @@
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ibarraespinosa/wrftools"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/wrftools"</span>)</code></pre></div>
 </div>
 <div id="wrf_domains" class="section level2">
 <h2 class="hasAnchor">
@@ -111,7 +111,8 @@ a &lt;-<span class="st"> </span><span class="kw"><a href="reference/wrf_domains.
 <div id="xtractor" class="section level2">
 <h2 class="hasAnchor">
 <a href="#xtractor" class="anchor"></a>xtractor</h2>
-<p>Which returns data.frame ready for ggplot2</p>
+<p>(inspired in NCL from DCA/IAG/USP)</p>
+<p>Which returns data.frame ready for ggplot2. The class of Time is POSIXct</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(cetesb)
 <span class="co">#use your wrfout</span>
 wrf &lt;-<span class="st"> "~/Documentos/wrfo/wrfoA.nc"</span>

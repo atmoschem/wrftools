@@ -22,7 +22,7 @@ You need [sf](https://github.com/r-spatial/sf) and [mapview](https://github.com/
 
 ## Install
 ```{r eval = FALSE}
-devtools::install_github("ibarraespinosa/wrftools")
+devtools::install_github("atmoschem/wrftools")
 ```
 
 ## wrf_domains
@@ -47,7 +47,9 @@ a[[1]] # mapview
 
 ## xtractor
 
-Which returns data.frame ready for ggplot2 
+(inspired in NCL from DCA/IAG/USP)
+
+Which returns data.frame ready for ggplot2. The class of Time is POSIXct
 
 ```{r eval = FALSE}
 data(cetesb)

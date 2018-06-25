@@ -139,7 +139,7 @@ $(document).ready(function () {
 </div>
 <div id="install" class="section level2">
 <h2>Install</h2>
-<pre class="r"><code>devtools::install_github(&quot;ibarraespinosa/wrftools&quot;)</code></pre>
+<pre class="r"><code>devtools::install_github(&quot;atmoschem/wrftools&quot;)</code></pre>
 </div>
 <div id="wrf_domains" class="section level2">
 <h2>wrf_domains</h2>
@@ -169,7 +169,8 @@ a &lt;- wrf_domains()</code></pre>
 </div>
 <div id="xtractor" class="section level2">
 <h2>xtractor</h2>
-<p>Which returns data.frame ready for ggplot2</p>
+<p>(inspired in NCL from DCA/IAG/USP)</p>
+<p>Which returns data.frame ready for ggplot2. The class of Time is POSIXct</p>
 <pre class="r"><code>data(cetesb)
 #use your wrfout
 wrf &lt;- &quot;~/Documentos/wrfo/wrfoA.nc&quot;

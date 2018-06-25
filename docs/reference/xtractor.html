@@ -108,8 +108,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>xtractor</span>(<span class='no'>atmos</span>, <span class='no'>vars</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>points</span>, <span class='kw'>crs_points</span> <span class='kw'>=</span> <span class='fl'>4326</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"WRF"</span>,
-  <span class='kw'>return_list</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>xtractor</span>(<span class='no'>atmos</span>, <span class='no'>vars</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>points</span>, <span class='kw'>stations</span> <span class='kw'>=</span> <span class='st'>"CC"</span>,
+  <span class='kw'>crs_points</span> <span class='kw'>=</span> <span class='fl'>4326</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"WRF"</span>, <span class='kw'>return_list</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -130,6 +130,10 @@
       <th>points</th>
       <td><p>data.frame, matrix, SpatialPointsDataFrame or sf 'POINTS',
 with coordinates East-weast (lat), north-south (long) and 'Station'.</p></td>
+    </tr>
+    <tr>
+      <th>stations</th>
+      <td><p>Character; names of stations for each point.</p></td>
     </tr>
     <tr>
       <th>crs_points</th>
@@ -161,7 +165,8 @@ if FALSE, only data.frame.</p></td>
 <span class='co'>#use your wrfout</span>
 <span class='co'>#wrf &lt;- "~/Documentos/wrfo/wrfoA.nc"</span>
 <span class='no'>t2</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"T2"</span>, <span class='st'>"o3"</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>xtractor</span>(<span class='kw'>atmos</span> <span class='kw'>=</span> <span class='no'>wrf</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='no'>t2</span>, <span class='kw'>points</span> <span class='kw'>=</span> <span class='no'>cetesb</span>[<span class='fl'>1</span>, ])
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>xtractor</span>(<span class='kw'>atmos</span> <span class='kw'>=</span> <span class='no'>wrf</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='no'>t2</span>, <span class='kw'>points</span> <span class='kw'>=</span> <span class='no'>cetesb</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, ],
+<span class='kw'>stations</span> <span class='kw'>=</span> <span class='no'>cetesb</span>$<span class='no'>Station</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
 <span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>xtractor</span>(<span class='kw'>atmos</span> <span class='kw'>=</span> <span class='no'>wrf</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='no'>t2</span>, <span class='kw'>points</span> <span class='kw'>=</span> <span class='no'>cetesb</span>[<span class='fl'>1</span>, ], <span class='kw'>return_list</span> <span class='kw'>=</span> <span class='no'>T</span>)
 <span class='co'># }</span></pre>
   </div>
