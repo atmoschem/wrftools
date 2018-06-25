@@ -34,8 +34,6 @@ xtractor <- function(atmos, vars, level = 1,
                      crs_points = 4326,
                      model = "WRF",
                      return_list = FALSE) {
-  message("adding name of stations currently nor supported\n")
-  message("Use points of one row")
 
   # NetCDF
   xx <- ncdf4::nc_open(atmos)
@@ -70,7 +68,6 @@ xtractor <- function(atmos, vars, level = 1,
     lr[[i]] <- rx
   }
   names(lr) <- vars
-  print(length(lr))
 
   # stations
   if(class(points)[1] == "matrix" | class(points)[1] == "data.frame"){
