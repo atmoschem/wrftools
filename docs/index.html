@@ -8,8 +8,8 @@
 <title>Provide tools such as plots and others to the WRF user • wrftools</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="Provide tools such as plots and others to the WRF user">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script><meta property="og:title" content="Provide tools such as plots and others to the WRF user">
 <meta property="og:description" content="It provide tools to the WRF use. The first tool is ploting the namelist.wps information in a dynamic map.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -18,7 +18,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">wrftools</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -62,12 +62,11 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     
 
     
     
-<div class="contents">
 <div id="wrftools" class="section level2">
 <h2 class="hasAnchor">
 <a href="#wrftools" class="anchor"></a>wrftools</h2>
@@ -83,9 +82,9 @@
 <a href="#install" class="anchor"></a>Install</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ibarraespinosa/wrftools"</span>)</code></pre></div>
 </div>
-<div id="example" class="section level2">
+<div id="wrf_domains" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<a href="#wrf_domains" class="anchor"></a>wrf_domains</h2>
 <p>wrf_domains returns a list of:</p>
 <ol style="list-style-type: decimal">
 <li>the map</li>
@@ -109,11 +108,33 @@ a &lt;-<span class="st"> </span><span class="kw"><a href="reference/wrf_domains.
 <img src="https://i.imgur.com/7giwGp6.png">
 </div>
 </div>
+<div id="xtractor" class="section level2">
+<h2 class="hasAnchor">
+<a href="#xtractor" class="anchor"></a>xtractor</h2>
+<p>Which returns data.frame ready for ggplot2</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(cetesb)
+<span class="co">#use your wrfout</span>
+wrf &lt;-<span class="st"> "~/Documentos/wrfo/wrfoA.nc"</span>
+t2 =<span class="st"> </span><span class="kw">c</span>(<span class="st">"T2"</span>, <span class="st">"o3"</span>)
+df &lt;-<span class="st"> </span><span class="kw"><a href="reference/xtractor.html">xtractor</a></span>(<span class="dt">atmos =</span> wrf, <span class="dt">vars =</span> t2, <span class="dt">points =</span> cetesb[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, ],
+<span class="dt">stations =</span> cetesb<span class="op">$</span>Station[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
+<div class="figure">
+<img src="https://i.imgur.com/jKTNorX.png">
+</div>
+<p>and raster bricks</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(cptcity)
+r &lt;-<span class="st"> </span><span class="kw"><a href="reference/xtractor.html">xtractor</a></span>(<span class="dt">atmos =</span> wrf, <span class="dt">vars =</span> t2, <span class="dt">points =</span> cetesb[<span class="dv">1</span>, ], <span class="dt">return_list =</span> T)
+<span class="co">#  A list with raster and data.frame</span>
+sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/spplot">spplot</a></span>(r[[<span class="dv">1</span>]][[<span class="dv">2</span>]], <span class="st">"layer.60"</span>,
+           <span class="dt">scales =</span> <span class="kw">list</span>(<span class="dt">draw =</span> T), <span class="dt">col.regions =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/cptcity/topics/cpt">cpt</a></span>(<span class="dv">1224</span>))</code></pre></div>
+<div class="figure">
+<img src="https://i.imgur.com/j4d5ei5.png">
+</div>
+</div>
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contributing" class="anchor"></a>Contributing</h2>
 <p>If you see any errors and know how to improve the function, or add new functions write an issue and a pull request, please. I will be ver grateful, for sure, 100%.</p>
-</div>
 </div>
   </div>
 
@@ -130,7 +151,9 @@ a &lt;-<span class="st"> </span><span class="kw"><a href="reference/wrf_domains.
 <div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+<li>
+<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
+</li>
 </ul>
 </div>
 <div class="developers">
@@ -155,6 +178,8 @@ a &lt;-<span class="st"> </span><span class="kw"><a href="reference/wrf_domains.
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>
