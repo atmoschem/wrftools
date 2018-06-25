@@ -56,11 +56,22 @@ data(cetesb)
 #use your wrfout
 wrf <- "~/Documentos/wrfo/wrfoA.nc"
 t2 = c("T2", "o3", "no", "no2")
-df <- xtractor(atmos = wrf, vars = t2, points = cetesb[1:3, ],
-stations = cetesb$Station[1:3])
+df <- xtractor(atmos = wrf, vars = t2, points = cetesb[1, ],
+stations = cetesb$Station[1])
 ```
 
-![](https://i.imgur.com/jKTNorX.png)
+or for more several stations (make sure they are insider your domain):
+
+```{r eval = FALSE}
+df <- do.call("rbind",lapply(1:2, function(i){
+  xtractor(atmos = wrf,
+           vars = t2,
+           points = cetesb[i,],
+           stations = cetesb$Station[i])
+}))
+```
+
+![](https://i.imgur.com/cXJZ1nI.png)
 
 and raster bricks
 

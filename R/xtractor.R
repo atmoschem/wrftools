@@ -34,6 +34,9 @@ xtractor <- function(atmos, vars, level = 1,
                      crs_points = 4326,
                      model = "WRF",
                      return_list = FALSE) {
+  if(nrow(points) > 1 ){
+    stop("Currently supports points with one row. Use 'for' or 'lapply'.")
+  }
   # NetCDF
   xx <- ncdf4::nc_open(atmos)
   lat <- ncdf4::ncvar_get(xx, "XLAT" )
@@ -115,7 +118,7 @@ xtractor <- function(atmos, vars, level = 1,
   }
 
    names(dft) <- c("Time", vars)
-   dft$Station = rep(stations, each = nrow(dft)/length(stations))
+   dft$Station = rep(stations, each = length(times))
 
    dft$Time <- as.POSIXct(x = dft$Time, format = "H%Y-%m-%d_%H:%M:%S",
                          tz = "GMT")

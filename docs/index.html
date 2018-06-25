@@ -120,10 +120,17 @@ a &lt;-<span class="st"> </span><span class="kw"><a href="reference/wrf_domains.
 <span class="co">#use your wrfout</span>
 wrf &lt;-<span class="st"> "~/Documentos/wrfo/wrfoA.nc"</span>
 t2 =<span class="st"> </span><span class="kw">c</span>(<span class="st">"T2"</span>, <span class="st">"o3"</span>, <span class="st">"no"</span>, <span class="st">"no2"</span>)
-df &lt;-<span class="st"> </span><span class="kw"><a href="reference/xtractor.html">xtractor</a></span>(<span class="dt">atmos =</span> wrf, <span class="dt">vars =</span> t2, <span class="dt">points =</span> cetesb[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, ],
-<span class="dt">stations =</span> cetesb<span class="op">$</span>Station[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
+df &lt;-<span class="st"> </span><span class="kw"><a href="reference/xtractor.html">xtractor</a></span>(<span class="dt">atmos =</span> wrf, <span class="dt">vars =</span> t2, <span class="dt">points =</span> cetesb[<span class="dv">1</span>, ],
+<span class="dt">stations =</span> cetesb<span class="op">$</span>Station[<span class="dv">1</span>])</code></pre></div>
+<p>or for more several stations (make sure they are insider your domain):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">"rbind"</span>,<span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="cf">function</span>(i){
+  <span class="kw"><a href="reference/xtractor.html">xtractor</a></span>(<span class="dt">atmos =</span> wrf,
+           <span class="dt">vars =</span> t2,
+           <span class="dt">points =</span> cetesb[i,],
+           <span class="dt">stations =</span> cetesb<span class="op">$</span>Station[i])
+}))</code></pre></div>
 <div class="figure">
-<img src="https://i.imgur.com/jKTNorX.png">
+<img src="https://i.imgur.com/cXJZ1nI.png">
 </div>
 <p>and raster bricks</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(cptcity)
