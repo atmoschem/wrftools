@@ -34,7 +34,6 @@ xtractor <- function(atmos, vars, level = 1,
                      crs_points = 4326,
                      model = "WRF",
                      return_list = FALSE) {
-
   # NetCDF
   xx <- ncdf4::nc_open(atmos)
   lat <- ncdf4::ncvar_get(xx, "XLAT" )
