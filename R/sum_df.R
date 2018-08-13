@@ -9,11 +9,16 @@
 #' @examples \dontrun{
 #' }
 sum_df <- function(X, geo) {
-  df <- do.call("+", lapply(1:length(X), function(i){
+  df <- lapply(1:length(X), function(i){
     x <- sf::st_set_geometry(readRDS(X[i]), NULL)
     x$id <- NULL
     x
-  }))
+  })
+  for(i in 2:length(df) ){
+    dft <- df[[1]]
+    dft <- dft + df[[i]]
+  }
+  df <- dft
   if(missing(geo)){
     return(df)
   }else{
