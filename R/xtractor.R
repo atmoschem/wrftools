@@ -93,41 +93,81 @@ xtractor <- function(atmos, vars, level = 1,
     names(points) <- c("Station")
   }
   # extraction
-  df <- list()
-  for(i in 1:length(lr)){
-    df[[i]] <- raster::extract(x = lr[[i]], y = points, df = TRUE)
-  }
-
-  dft <- lapply(1:length(df), function(i){
-    df[[i]]$ID <- NULL
-    names(df[[i]]) <- times
-    tidyr::gather(df[[i]], vars[i])
-  })
-  #  for(i in 1:length(dft)){
-  #    dft[[i]]$Station[i] = points$Station[i]
-  #  }
-  # dft <- do.call("cbind", dft)
-  # dft = do.call("cbind", dft)
-  # dft <- cbind(dft[[1]])
+  cat(paste0("First class of atmos is", class(atmos)[1]))
+  if(class(atmos)[1] == "raster"){
+    lr <- atmos
+    df <- list()
+    for(i in 1:length(lr)){
+      df[[i]] <- raster::extract(x = lr[[i]], y = points, df = TRUE)
+    }
+    dft <- lapply(1:length(df), function(i){
+      df[[i]]$ID <- NULL
+      names(df[[i]]) <- times
+      tidyr::gather(df[[i]], vars[i])
+    })
 
     if(length(dft) > 1){
       dft = do.call("cbind", dft)
       dft[, seq(3, length(vars)*2-1, 2)] <- NULL # remove repeated time
     } else {
       dft = do.call("cbind", dft)
-  }
+    }
+    names(dft) <- c("Time", vars)
+    dft$Station = rep(stations, each = length(times))
 
-   names(dft) <- c("Time", vars)
-   dft$Station = rep(stations, each = length(times))
+    dft$Time <- as.POSIXct(x = dft$Time, format = "H%Y-%m-%d_%H:%M:%S",
+                           tz = "GMT")
+    names(lr) <- vars
+    r <- list(lr,dft)
+    names(r) <- c("raster", "data")
+    if(return_list){
+      return(r)
+    } else {
+      return(dft)
+    }
+  } else if(class(atmos)[1] == "character"){
+    df <- list()
+    for(i in 1:length(lr)){
+      df[[i]] <- raster::extract(x = lr[[i]], y = points, df = TRUE)
+    }
+    dft <- lapply(1:length(df), function(i){
+      df[[i]]$ID <- NULL
+      names(df[[i]]) <- times
+      tidyr::gather(df[[i]], vars[i])
+    })
 
-   dft$Time <- as.POSIXct(x = dft$Time, format = "H%Y-%m-%d_%H:%M:%S",
-                         tz = "GMT")
-   names(lr) <- vars
-   r <- list(lr,dft)
-   names(r) <- c("raster", "data")
-   if(return_list){
-    return(r)
+    if(length(dft) > 1){
+      dft = do.call("cbind", dft)
+      dft[, seq(3, length(vars)*2-1, 2)] <- NULL # remove repeated time
+    } else {
+      dft = do.call("cbind", dft)
+    }
+    names(dft) <- c("Time", vars)
+    dft$Station = rep(stations, each = length(times))
+
+    dft$Time <- as.POSIXct(x = dft$Time, format = "H%Y-%m-%d_%H:%M:%S",
+                           tz = "GMT")
+    names(lr) <- vars
+    r <- list(lr,dft)
+    names(r) <- c("raster", "data")
+    if(return_list){
+      return(r)
+    } else {
+      return(dft)
+    }
+
   } else {
-    return(dft)
+    lr <- sf::st_as_sf(atmos)
+    df1 <- st_intersection(sf::st_transform(lr, 4326), points)
+    df1 <- st_set_geometry(df, NULL)
+    for(i in 1:ncol(df1)){
+      df1[, i] <- as.numeric(df1[, i])
+    }
+    dft <- tidyr::gather(data = df1,
+                  key = stations)[1:((ncol(df1) -1)*length(station)), ]
+    dft$Station = stations
+    time <- rep(1:(ncol(df1) -1), each = length(stations))
+    dft$time <- time
+ return(dft)
   }
 }
