@@ -34,42 +34,44 @@ xtractor <- function(atmos, vars, level = 1,
                      crs_points = 4326,
                      model = "WRF",
                      return_list = FALSE) {
-  if(nrow(points) > 1 ){
-    stop("Currently supports points with one row. Use 'for' or 'lapply'.")
-  }
-  # NetCDF
-  xx <- ncdf4::nc_open(atmos)
-  lat <- ncdf4::ncvar_get(xx, "XLAT" )
-  lon <- ncdf4::ncvar_get(xx, "XLONG" )
-  times <- ncdf4::ncvar_get(xx, "Times")
-  times <- gsub(pattern = " ", replacement = "_", x = times)
-  times <- paste0("H", times)
-
-  # raster
-
-  lr <- list()
-  for(i in 1:length(vars)){
-    x <- eixport::wrf_get(file = atmos, name = vars[i], as_raster = FALSE)
-
-    if(length(dim(x)) == 3){
-      rx <- eixport::wrf_get(file = atmos, name = vars[i], as_raster = TRUE)
-
-    } else if(length(dim(x)) == 4){
-      lista <- list()
-      for (j in 1:dim(x)[4] ) {
-        lista[[j]] <- raster::raster(t(x[1:dim(x)[1],
-                                 dim(x)[2]:1,
-                                 level,
-                                 j]),
-                             xmn = min(lon),xmx = max(lon),
-                             ymn = min(lat),ymx = max(lat),
-                             crs="+init=epsg:4326")
-      }
-      rx <- raster::brick(lista)
+  if(class(atmos)[1] == "character"){
+    if(nrow(points) > 1 ){
+      stop("Currently supports points with one row. Use 'for' or 'lapply'.")
     }
-    lr[[i]] <- rx
+    # NetCDF
+    xx <- ncdf4::nc_open(atmos)
+    lat <- ncdf4::ncvar_get(xx, "XLAT" )
+    lon <- ncdf4::ncvar_get(xx, "XLONG" )
+    times <- ncdf4::ncvar_get(xx, "Times")
+    times <- gsub(pattern = " ", replacement = "_", x = times)
+    times <- paste0("H", times)
+
+    # raster
+
+    lr <- list()
+    for(i in 1:length(vars)){
+      x <- eixport::wrf_get(file = atmos, name = vars[i], as_raster = FALSE)
+
+      if(length(dim(x)) == 3){
+        rx <- eixport::wrf_get(file = atmos, name = vars[i], as_raster = TRUE)
+
+      } else if(length(dim(x)) == 4){
+        lista <- list()
+        for (j in 1:dim(x)[4] ) {
+          lista[[j]] <- raster::raster(t(x[1:dim(x)[1],
+                                           dim(x)[2]:1,
+                                           level,
+                                           j]),
+                                       xmn = min(lon),xmx = max(lon),
+                                       ymn = min(lat),ymx = max(lat),
+                                       crs="+init=epsg:4326")
+        }
+        rx <- raster::brick(lista)
+      }
+      lr[[i]] <- rx
+    }
+    names(lr) <- vars
   }
-  names(lr) <- vars
 
   # stations
   if(class(points)[1] == "matrix" | class(points)[1] == "data.frame"){
@@ -93,7 +95,7 @@ xtractor <- function(atmos, vars, level = 1,
     names(points) <- c("Station")
   }
   # extraction
-  cat(paste0("First class of atmos is", class(atmos)[1]))
+  cat(paste0("First class of atmos is: '", class(atmos)[1], "'\n"))
   if(class(atmos)[1] == "raster"){
     lr <- atmos
     df <- list()
@@ -158,13 +160,15 @@ xtractor <- function(atmos, vars, level = 1,
 
   } else {
     lr <- sf::st_as_sf(atmos)
-    df1 <- st_intersection(sf::st_transform(lr, 4326), points)
-    df1 <- st_set_geometry(df, NULL)
+    points <- sf::st_as_sf(points)
+  df1 <- suppressWarnings(sf::st_intersection(sf::st_transform(lr, crs_points),
+                               sf::st_transform(points, crs_points)))
+    df1 <- sf::st_set_geometry(df1, NULL)
     for(i in 1:ncol(df1)){
       df1[, i] <- as.numeric(df1[, i])
     }
     dft <- tidyr::gather(data = df1,
-                  key = stations)[1:((ncol(df1) -1)*length(station)), ]
+                  key = stations)[1:((ncol(df1) -1)*length(stations)), ]
     dft$Station = stations
     time <- rep(1:(ncol(df1) -1), each = length(stations))
     dft$time <- time
