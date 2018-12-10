@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.2.1 (Release date: 2018-06-25)
+# vein 0.2.1 (Release date: 2018-12-09)
+
+- replace mapview with leaflet
+
+## vein 0.2.1 (Release date: 2018-06-25)
 
 - Fix.
 

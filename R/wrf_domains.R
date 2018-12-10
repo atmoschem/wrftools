@@ -44,8 +44,8 @@
 #'  is in degrees latitude. Grid distances for nests are determined recursively
 #'   based on values specified for parent_grid_ratio and parent_id.
 #' @param dtm A real value to convert degrees to meters.
-#' @param ... ignored
-#' @importFrom mapview mapview
+#' @importFrom leaflet leaflet addPolylines addTiles
+#' @importFrom magrittr "%>%"
 #' @importFrom sf st_sfc st_point st_coordinates st_polygon st_sf
 #' @return a list of map and sf
 #' @export
@@ -55,7 +55,7 @@
 #' The definitions comes mostly from the only WRF manual available at:
 #' http://www2.mmm.ucar.edu/wrf/users/docs/user_guide_V3/users_guide_chap3.htm
 #' @examples {
-#' wrf_domains()
+#' a <- wrf_domains()
 #' }
 wrf_domains <- function(max_dom = 3,
                   map_proj = 'lambert',
@@ -101,7 +101,10 @@ wrf_domains <- function(max_dom = 3,
       crs = crs)
     doms <- rbind(p01)
       print(doms)
-      return(mapview(doms, alpha.regions = 0, ...))
+      return(list(leaflet::leaflet(doms) %>%
+                    leaflet::addPolylines(color = "black") %>%
+                    leaflet::addTiles(),
+                  doms))
 
   } else if(max_dom == 2){
     dxd01 = dx/dtm # meters
@@ -132,7 +135,10 @@ wrf_domains <- function(max_dom = 3,
 
     doms <- rbind(p01, p02)
     print(doms)
-    return(list(mapview(doms, alpha.regions = 0, ...), doms))
+    return(list(leaflet::leaflet(doms) %>%
+                  leaflet::addPolylines(color = "black") %>%
+                  leaflet::addTiles(),
+                doms))
 
   } else if(max_dom == 3){
     dxd01 = dx/dtm # meters
@@ -173,7 +179,10 @@ wrf_domains <- function(max_dom = 3,
       crs = crs)
     doms <- rbind(p01, p02, p03)
     print(doms)
-    return(list(mapview(doms, alpha.regions = 0, ...), doms))
+    return(list(leaflet::leaflet(doms) %>%
+                  leaflet::addPolylines(color = "black") %>%
+                  leaflet::addTiles(),
+                doms))
 
   } else if(max_dom == 4){
     dxd01 = dx/dtm # meters
@@ -227,7 +236,10 @@ wrf_domains <- function(max_dom = 3,
       crs = crs)
     doms <- rbind(p01, p02, p03, p04)
     print(doms)
-    return(list(mapview(doms, alpha.regions = 0, ...), doms))
+    return(list(leaflet::leaflet(doms) %>%
+                  leaflet::addPolylines(color = "black") %>%
+                  leaflet::addTiles(),
+                doms))
 
   }
 

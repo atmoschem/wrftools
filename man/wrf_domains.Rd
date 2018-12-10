@@ -6,10 +6,10 @@
 \usage{
 wrf_domains(max_dom = 3, map_proj = "lambert", ref_lat = -21.299,
   ref_lon = -46.147, truelat1 = -21.456, truelat2 = -24.55,
-  stand_lon = -46.147, parent_id = c(1, 1, 2), parent_grid_ratio = c(1, 5,
-  5), i_parent_start = c(1, 41, 25), j_parent_start = c(1, 31, 25),
-  e_we = c(101, 151, 21), e_sn = c(99, 116, 21), dx = 25000, dy = 25000,
-  dtm = (102.42 * 1000), ...)
+  stand_lon = -46.147, parent_id = c(1, 1, 2),
+  parent_grid_ratio = c(1, 5, 5), i_parent_start = c(1, 41, 25),
+  j_parent_start = c(1, 31, 25), e_we = c(101, 151, 21), e_sn = c(99,
+  116, 21), dx = 25000, dy = 25000, dtm = (102.42 * 1000), ...)
 }
 \arguments{
 \item{max_dom}{Integer; number of domains}
@@ -69,8 +69,6 @@ in degrees latitude for the 'lat-lon' projection; for NMM, the grid distance
   based on values specified for parent_grid_ratio and parent_id.}
 
 \item{dtm}{A real value to convert degrees to meters.}
-
-\item{...}{ignored}
 }
 \value{
 a list of map and sf
@@ -87,6 +85,6 @@ http://www2.mmm.ucar.edu/wrf/users/docs/user_guide_V3/users_guide_chap3.htm
 }
 \examples{
 {
-wrf_domains()
+a <- wrf_domains()
 }
 }

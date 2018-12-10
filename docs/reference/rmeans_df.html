@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>extractor from atmospheric models — xtractor • wrftools</title>
+<title>Calculates rowMeans reading .rds — rmeans_df • wrftools</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="extractor from atmospheric models — xtractor" />
+<meta property="og:title" content="Calculates rowMeans reading .rds — rmeans_df" />
 
-<meta property="og:description" content="Return data.framee or list of raster and df from points." />
+<meta property="og:description" content="Return data.frame sf" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -102,78 +102,45 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>extractor from atmospheric models</h1>
-    <small class="dont-index">Source: <a href='https://github.com/atmoschem/wrftools/blob/master/R/xtractor.R'><code>R/xtractor.R</code></a></small>
-    <div class="hidden name"><code>xtractor.Rd</code></div>
+    <h1>Calculates rowMeans reading .rds</h1>
+    <small class="dont-index">Source: <a href='https://github.com/atmoschem/wrftools/blob/master/R/rmeans_df.R'><code>R/rmeans_df.R</code></a></small>
+    <div class="hidden name"><code>rmeans_df.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Return data.framee or list of raster and df from points.</p>
+    <p>Return data.frame sf</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>xtractor</span>(<span class='no'>atmos</span>, <span class='no'>vars</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>points</span>, <span class='kw'>stations</span> <span class='kw'>=</span> <span class='st'>"CC"</span>,
-  <span class='kw'>crs_points</span> <span class='kw'>=</span> <span class='fl'>4326</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"WRF"</span>, <span class='kw'>return_list</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>rmeans_df</span>(<span class='no'>X</span>, <span class='no'>name</span>, <span class='no'>geo</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>atmos</th>
-      <td><p>Character; path to output of model (wrfout)</p></td>
+      <th>X</th>
+      <td><p>Character; path to .rds</p></td>
     </tr>
     <tr>
-      <th>vars</th>
-      <td><p>Character; Variable with has 3 or 4 dimensions.</p></td>
+      <th>name</th>
+      <td><p>Character; Name of new column.</p></td>
     </tr>
     <tr>
-      <th>level</th>
-      <td><p>Integer; Which level</p></td>
-    </tr>
-    <tr>
-      <th>points</th>
-      <td><p>data.frame, matrix, SpatialPointsDataFrame or sf 'POINTS',
-with coordinates East-weast (lat), north-south (long) and 'Station'.</p></td>
-    </tr>
-    <tr>
-      <th>stations</th>
-      <td><p>Character; names of stations for each point.</p></td>
-    </tr>
-    <tr>
-      <th>crs_points</th>
-      <td><p>Integer, crs points.</p></td>
-    </tr>
-    <tr>
-      <th>model</th>
-      <td><p>Character; Currently, only "WRF"</p></td>
-    </tr>
-    <tr>
-      <th>return_list</th>
-      <td><p>Logical; If TRUE, return a list with raster and data.frames
-if FALSE, only data.frame.</p></td>
+      <th>geo</th>
+      <td><p>'sf'</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Return data.framee or list of raster and df</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>Based on NCL scrip xtractor from DCA/IAG/USP</p>
+    <p>Return data.frame or 'sf'</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>cetesb</span>)
-<span class='co'>#use your wrfout</span>
-<span class='co'>#wrf &lt;- "~/Documentos/wrfo/wrfoA.nc"</span>
-<span class='no'>t2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"T2"</span>, <span class='st'>"o3"</span>, <span class='st'>"no"</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>xtractor</span>(<span class='kw'>atmos</span> <span class='kw'>=</span> <span class='no'>wrf</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='no'>t2</span>, <span class='kw'>points</span> <span class='kw'>=</span> <span class='no'>cetesb</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, ],
-<span class='kw'>stations</span> <span class='kw'>=</span> <span class='no'>cetesb</span>$<span class='no'>Station</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>xtractor</span>(<span class='kw'>atmos</span> <span class='kw'>=</span> <span class='no'>wrf</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='no'>t2</span>, <span class='kw'>points</span> <span class='kw'>=</span> <span class='no'>cetesb</span>[<span class='fl'>1</span>, ], <span class='kw'>return_list</span> <span class='kw'>=</span> <span class='no'>T</span>)
-<span class='co'># }</span></pre>
+    <pre class="examples"># NOT RUN {
+# }
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -181,8 +148,6 @@ if FALSE, only data.frame.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
