@@ -85,7 +85,6 @@ sp::spplot(r[[1]][[2]], "layer.60",
 
 ![](https://i.imgur.com/j4d5ei5.png)
 
-## Project your 
 
 ## Contributing
 
