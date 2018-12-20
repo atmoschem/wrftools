@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.2.1 (Release date: 2018-12-09)
+# vein 0.3.1 (Release date: 2018-12-09)
+
+- add project_wrf, to project wrf output files to any EPSG projection.
+
+## vein 0.3.0 (Release date: 2018-12-09)
 
 - replace mapview with leaflet
 

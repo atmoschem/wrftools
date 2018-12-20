@@ -8,6 +8,7 @@
 #' @importFrom sf st_set_geometry st_sf
 #' @export
 #' @examples \dontrun{
+#' #do not run
 #' }
 rmeans_df <- function(X, name, geo) {
   df <- as.data.frame(do.call("cbind",lapply(1:length(X), function(i){

@@ -7,11 +7,11 @@
 covnox(cov, nox, geo)
 }
 \arguments{
+\item{cov}{Data-frame of numerics}
+
+\item{nox}{Data-frame of numerics}
+
 \item{geo}{'sf'}
-
-\item{X}{Character; path to .rds}
-
-\item{name}{Character; Name of new column.}
 }
 \value{
 Return data.frame or 'sf'
@@ -21,5 +21,6 @@ Return data.frame sf
 }
 \examples{
 \dontrun{
+#do not run
 }
 }

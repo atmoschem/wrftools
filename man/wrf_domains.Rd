@@ -69,6 +69,8 @@ in degrees latitude for the 'lat-lon' projection; for NMM, the grid distance
   based on values specified for parent_grid_ratio and parent_id.}
 
 \item{dtm}{A real value to convert degrees to meters.}
+
+\item{...}{ignored}
 }
 \value{
 a list of map and sf

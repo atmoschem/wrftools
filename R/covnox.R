@@ -1,13 +1,14 @@
 #' Divide data.frames
 #'
 #' @description Return data.frame sf
-#' @param X Character; path to .rds
-#' @param name Character; Name of new column.
+#' @param cov Data-frame of numerics
+#' @param nox Data-frame of numerics
 #' @param geo 'sf'
 #' @return Return data.frame or 'sf'
-#' @importFrom sf st_set_geometry st_sf
+#' @importFrom sf  st_sf st_crs
 #' @export
 #' @examples \dontrun{
+#' #do not run
 #' }
 covnox <- function(cov, nox, geo){
   df <- sum_df(cov)/sum_df(nox)

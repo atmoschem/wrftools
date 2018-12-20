@@ -21,5 +21,6 @@ Return data.frame sf
 }
 \examples{
 \dontrun{
+#do not run
 }
 }

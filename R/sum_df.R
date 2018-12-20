@@ -7,6 +7,7 @@
 #' @importFrom sf st_set_geometry st_sf
 #' @export
 #' @examples \dontrun{
+#' # do not run
 #' }
 sum_df <- function(X, geo) {
   df <- lapply(1:length(X), function(i){

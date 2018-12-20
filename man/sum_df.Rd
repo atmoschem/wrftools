@@ -19,5 +19,6 @@ Return data.framee or sf
 }
 \examples{
 \dontrun{
+# do not run
 }
 }

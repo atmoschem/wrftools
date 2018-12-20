@@ -44,6 +44,7 @@
 #'  is in degrees latitude. Grid distances for nests are determined recursively
 #'   based on values specified for parent_grid_ratio and parent_id.
 #' @param dtm A real value to convert degrees to meters.
+#' @param  ... ignored
 #' @importFrom leaflet leaflet addPolylines addTiles
 #' @importFrom magrittr "%>%"
 #' @importFrom sf st_sfc st_point st_coordinates st_polygon st_sf
