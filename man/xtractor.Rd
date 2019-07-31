@@ -5,7 +5,8 @@
 \title{extractor from atmospheric models}
 \usage{
 xtractor(atmos, vars, level = 1, points, stations = "CC",
-  crs_points = 4326, model = "WRF", return_list = FALSE)
+  crs_points = 4326, model = "WRF", tz = "America/Sao_Paulo",
+  return_list = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{atmos}{Character; path to output of model (wrfout)}
@@ -23,8 +24,12 @@ with coordinates East-weast (lat), north-south (long) and 'Station'.}
 
 \item{model}{Character; Currently, only "WRF"}
 
+\item{tz}{Character; Time zone}
+
 \item{return_list}{Logical; If TRUE, return a list with raster and data.frames
 if FALSE, only data.frame.}
+
+\item{verbose}{logical}
 }
 \value{
 Return data.framee or list of raster and df

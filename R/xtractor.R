@@ -4,6 +4,7 @@
 #' @param atmos Character; path to output of model (wrfout)
 #' @param vars Character; Variable with has 3 or 4 dimensions.
 #' @param level Integer; Which level
+#' @param tz Character; Time zone
 #' @param points data.frame, matrix, SpatialPointsDataFrame or sf 'POINTS',
 #' with coordinates East-weast (lat), north-south (long) and 'Station'.
 #' @param stations Character; names of stations for each point.
@@ -11,12 +12,12 @@
 #' @param model Character; Currently, only "WRF"
 #' @param return_list Logical; If TRUE, return a list with raster and data.frames
 #' if FALSE, only data.frame.
+#' @param verbose logical
 #' @return Return data.framee or list of raster and df
 #' @importFrom eixport wrf_get
 #' @importFrom ncdf4 nc_open ncvar_get
 #' @importFrom raster extract brick raster
 #' @importFrom sf st_as_sf st_transform as_Spatial
-#' @importFrom tidyr gather
 #' @importFrom methods as
 #' @note Based on NCL scrip xtractor from DCA/IAG/USP
 #' @export
@@ -29,42 +30,50 @@
 #' stations = cetesb$Station[1:3])
 #' r <- xtractor(atmos = wrf, vars = t2, points = cetesb[1, ], return_list = T)
 #' }
-xtractor <- function(atmos, vars, level = 1,
-                     points, stations = "CC",
-                     crs_points = 4326,
-                     model = "WRF",
-                     return_list = FALSE) {
-  if(class(atmos)[1] == "character"){
-    if(nrow(points) > 1 ){
+xtractor <- function (atmos,
+                       vars,
+                       level = 1,
+                       points,
+                       stations = "CC",
+                       crs_points = 4326,
+                       model = "WRF",
+                       tz = "America/Sao_Paulo",
+                       return_list = FALSE,
+                       verbose = TRUE)
+{
+  if (class(atmos)[1] == "character") {
+    if (nrow(points) > 1) {
       stop("Currently supports points with one row. Use 'for' or 'lapply'.")
     }
-    # NetCDF
+
+    if(verbose) cat(paste0("Reading NetCDF \n"))
     xx <- ncdf4::nc_open(atmos)
-    lat <- ncdf4::ncvar_get(xx, "XLAT" )
-    lon <- ncdf4::ncvar_get(xx, "XLONG" )
+    lat <- ncdf4::ncvar_get(xx, "XLAT")
+    lon <- ncdf4::ncvar_get(xx, "XLONG")
     times <- ncdf4::ncvar_get(xx, "Times")
     times <- gsub(pattern = " ", replacement = "_", x = times)
     times <- paste0("H", times)
-
-    # raster
-
     lr <- list()
-    for(i in 1:length(vars)){
-      x <- eixport::wrf_get(file = atmos, name = vars[i], as_raster = FALSE)
-
-      if(length(dim(x)) == 3){
-        rx <- eixport::wrf_get(file = atmos, name = vars[i], as_raster = TRUE)
-
-      } else if(length(dim(x)) == 4){
+    if(verbose) cat(paste0("Converting to raster \n"))
+    for (i in 1:length(vars)) {
+      x <- eixport::wrf_get(file = atmos, name = vars[i],
+                            as_raster = FALSE)
+      if (length(dim(x)) == 3) {
+        rx <- eixport::wrf_get(file = atmos, name = vars[i],
+                               as_raster = TRUE)
+      }
+      else if (length(dim(x)) == 4) {
         lista <- list()
-        for (j in 1:dim(x)[4] ) {
+
+        for (j in 1:dim(x)[4]) {
           lista[[j]] <- raster::raster(t(x[1:dim(x)[1],
                                            dim(x)[2]:1,
-                                           level,
-                                           j]),
-                                       xmn = min(lon),xmx = max(lon),
-                                       ymn = min(lat),ymx = max(lat),
-                                       crs="+init=epsg:4326")
+                                           level, j]),
+                                       xmn = min(lon),
+                                       xmx = max(lon),
+                                       ymn = min(lat),
+                                       ymx = max(lat),
+                                       crs = "+init=epsg:4326")
         }
         rx <- raster::brick(lista)
       }
@@ -73,105 +82,67 @@ xtractor <- function(atmos, vars, level = 1,
     names(lr) <- vars
   }
 
-  # stations
-  if(class(points)[1] == "matrix" | class(points)[1] == "data.frame"){
+
+  if (class(points)[1] == "matrix" | class(points)[1] == "data.frame") {
     points <- as.data.frame(points)
     names(points) <- c("x", "y", "Station")
     points <- sf::st_as_sf(points,
                            coords = c(x = "x", y = "y"),
                            crs = crs_points)
-    if(crs_points != 4326) points <- sf::st_transform(points, 4326)
-
+    if (crs_points != 4326)
+      points <- sf::st_transform(points, 4326)
     points <- as(points, "Spatial")
-  } else if(class(points)[1] == "sf"){
+  }
+  else if (class(points)[1] == "sf") {
     names(points) <- c("Station", "geometry")
-    if(crs_points != 4326) points <- sf::st_transform(points, 4326)
+    if (crs_points != 4326)
+      points <- sf::st_transform(points, 4326)
     points <- as(points, "Spatial")
-  } else if(class(points)[1] == "SpatialPointsDataFrame"){
+  }
+  else if (class(points)[1] == "SpatialPointsDataFrame") {
     names(points) <- c("Station")
-    if(crs_points != 4326) points <- sf::st_transform(sf::st_as_sf(points),
-                                                      4326)
+    if (crs_points != 4326)
+      points <- sf::st_transform(sf::st_as_sf(points),
+                                 4326)
     points <- sf::as_Spatial(points)
     names(points) <- c("Station")
   }
-  # extraction
-  cat(paste0("First class of atmos is: '", class(atmos)[1], "'\n"))
-  if(class(atmos)[1] == "raster"){
-    lr <- atmos
+
+
+  if (class(atmos)[1] == "character") {
     df <- list()
-    for(i in 1:length(lr)){
-      df[[i]] <- raster::extract(x = lr[[i]], y = points, df = TRUE)
+    if(verbose)   cat(paste0("Extracting data\n\n"))
+
+    for (i in 1:length(lr)) {
+      df[[i]] <- raster::extract(x = lr[[i]],
+                                 y = points,
+                                 df = TRUE)
     }
-    dft <- lapply(1:length(df), function(i){
+    dft <- lapply(1:length(df), function(i) {
       df[[i]]$ID <- NULL
       names(df[[i]]) <- times
-      tidyr::gather(df[[i]], vars[i])
+      dff <- data.frame(x = unlist(df[[i]]))
+      dff
     })
+    dft = do.call("cbind", dft)
+    names(dft) <- c(vars)
+    dft$Time <- times
 
-    if(length(dft) > 1){
-      dft = do.call("cbind", dft)
-      dft[, seq(3, length(vars)*2-1, 2)] <- NULL # remove repeated time
-    } else {
-      dft = do.call("cbind", dft)
-    }
-    names(dft) <- c("Time", vars)
     dft$Station = rep(stations, each = length(times))
-
     dft$Time <- as.POSIXct(x = dft$Time, format = "H%Y-%m-%d_%H:%M:%S",
                            tz = "GMT")
+
+    dft$LT <- dft$Time
+    attr(dft$LT, "tzone") <- tz
+
     names(lr) <- vars
-    r <- list(lr,dft)
+    r <- list(lr, dft)
     names(r) <- c("raster", "data")
-    if(return_list){
+    if (return_list) {
       return(r)
-    } else {
+    }
+    else {
       return(dft)
     }
-  } else if(class(atmos)[1] == "character"){
-    df <- list()
-    for(i in 1:length(lr)){
-      df[[i]] <- raster::extract(x = lr[[i]], y = points, df = TRUE)
-    }
-    dft <- lapply(1:length(df), function(i){
-      df[[i]]$ID <- NULL
-      names(df[[i]]) <- times
-      tidyr::gather(df[[i]], vars[i])
-    })
-
-    if(length(dft) > 1){
-      dft = do.call("cbind", dft)
-      dft[, seq(3, length(vars)*2-1, 2)] <- NULL # remove repeated time
-    } else {
-      dft = do.call("cbind", dft)
-    }
-    names(dft) <- c("Time", vars)
-    dft$Station = rep(stations, each = length(times))
-
-    dft$Time <- as.POSIXct(x = dft$Time, format = "H%Y-%m-%d_%H:%M:%S",
-                           tz = "GMT")
-    names(lr) <- vars
-    r <- list(lr,dft)
-    names(r) <- c("raster", "data")
-    if(return_list){
-      return(r)
-    } else {
-      return(dft)
-    }
-
-  } else {
-    lr <- sf::st_as_sf(atmos)
-    points <- sf::st_as_sf(points)
-  df1 <- suppressWarnings(sf::st_intersection(sf::st_transform(lr, crs_points),
-                               sf::st_transform(points, crs_points)))
-    df1 <- sf::st_set_geometry(df1, NULL)
-    for(i in 1:ncol(df1)){
-      df1[, i] <- as.numeric(df1[, i])
-    }
-    dft <- tidyr::gather(data = df1,
-                  key = stations)[1:((ncol(df1) -1)*length(stations)), ]
-    dft$Station = stations
-    time <- rep(1:(ncol(df1) -1), each = length(stations))
-    dft$time <- time
- return(dft)
   }
 }
