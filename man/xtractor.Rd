@@ -2,7 +2,7 @@
 % Please edit documentation in R/xtractor.R
 \name{xtractor}
 \alias{xtractor}
-\title{extractor from atmospheric models}
+\title{Extract several variables from WRF outputs}
 \usage{
 xtractor(atmos, vars, level = 1, points, stations = "CC",
   crs_points = 4326, model = "WRF", tz = "America/Sao_Paulo",
