@@ -51,24 +51,15 @@ a[[1]] # leaflet
 
 Which returns data.frame ready for ggplot2. The class of Time is POSIXct
 
+* NOW SUPPORTS MANY POINTS*
+
 ```{r eval = FALSE}
 data(cetesb)
 #use your wrfout
-wrf <- "~/Documentos/wrfo/wrfoA.nc"
-t2 = c("T2", "o3", "no", "no2")
-df <- xtractor(atmos = wrf, vars = t2, points = cetesb[1, ],
-stations = cetesb$Station[1])
-```
-
-or for more several stations (make sure they are insider your domain):
-
-```{r eval = FALSE}
-df <- do.call("rbind",lapply(1:2, function(i){
-  xtractor(atmos = wrf,
-           vars = t2,
-           points = cetesb[i,],
-           stations = cetesb$Station[i])
-}))
+wrf <- "wrfoA.nc"
+t2 = c("T2", "o3", "no", "no2", "PM10", "PM2_5_DRY")
+df <- xtractor(atmos = wrf, vars = t2, points = cetesb,
+stations = cetesb$Station)
 ```
 
 ![](https://i.imgur.com/cXJZ1nI.png)

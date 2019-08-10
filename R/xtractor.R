@@ -17,7 +17,7 @@
 #' @importFrom eixport wrf_get
 #' @importFrom ncdf4 nc_open ncvar_get
 #' @importFrom raster extract brick raster
-#' @importFrom sf st_as_sf st_transform as_Spatial
+#' @importFrom sf st_as_sf st_transform as_Spatial st_sf
 #' @importFrom methods as
 #' @note Based on NCL scrip xtractor from DCA/IAG/USP
 #' @export
@@ -42,20 +42,20 @@ xtractor <- function (atmos,
                        verbose = TRUE){
 # desde aqui
   if (class(atmos)[1] == "character") {
-	  
+
     if(verbose) cat(paste0("Reading NetCDF \n"))
-    
+
     xx <- ncdf4::nc_open(atmos)
     lat <- ncdf4::ncvar_get(xx, "XLAT")
     lon <- ncdf4::ncvar_get(xx, "XLONG")
     times <- ncdf4::ncvar_get(xx, "Times")
     times <- gsub(pattern = " ", replacement = "_", x = times)
     times <- paste0("H", times)
-    
+
     lr <- list()
-    
+
     if(verbose) cat(paste0("Converting to raster \n"))
-    
+
     for (i in 1:length(vars)) {
       x <- eixport::wrf_get(file = atmos, name = vars[i],
                             as_raster = FALSE)
@@ -109,7 +109,7 @@ xtractor <- function (atmos,
 
 
   if (class(atmos)[1] == "character") {
- 
+
     if(verbose)   cat(paste0("Extracting data\n\n"))
  df <- list()
 lista <- list()
@@ -129,7 +129,7 @@ for(j in 1:length(stations)) {
     names(dft) <- c(vars)
     dft$Time <- times
     dft$Station = stations[j]
-    dft <- sf::st_sf(dft, geometry = sf::st_sfc(st_as_sf(points)))
+    dft <- sf::st_sf(dft, geometry = sf::st_sfc(sf::st_as_sf(points)))
     lista[[j]] <- dft
 	}
     dft = do.call("rbind", lista)

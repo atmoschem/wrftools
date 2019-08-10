@@ -46,8 +46,8 @@ data(cetesb)
 #use your wrfout
 #wrf <- "~/Documentos/wrfo/wrfoA.nc"
 t2 = c("T2", "o3", "no")
-df <- xtractor(atmos = wrf, vars = t2, points = cetesb[1:3, ],
+df <- xtractor(atmos = wrf, vars = t2, points = cetesb,
 stations = cetesb$Station[1:3])
-r <- xtractor(atmos = wrf, vars = t2, points = cetesb[1, ], return_list = T)
+r <- xtractor(atmos = wrf, vars = t2, points = cetesb return_list = T)
 }
 }
