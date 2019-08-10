@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">wrftools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -114,7 +114,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>xtractor</span>(<span class='no'>atmos</span>, <span class='no'>vars</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>points</span>, <span class='kw'>stations</span> <span class='kw'>=</span> <span class='st'>"CC"</span>,
-  <span class='kw'>crs_points</span> <span class='kw'>=</span> <span class='fl'>4326</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"WRF"</span>, <span class='kw'>return_list</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>crs_points</span> <span class='kw'>=</span> <span class='fl'>4326</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"WRF"</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>"America/Sao_Paulo"</span>,
+  <span class='kw'>return_list</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,9 +150,17 @@ with coordinates East-weast (lat), north-south (long) and 'Station'.</p></td>
       <td><p>Character; Currently, only "WRF"</p></td>
     </tr>
     <tr>
+      <th>tz</th>
+      <td><p>Character; Time zone</p></td>
+    </tr>
+    <tr>
       <th>return_list</th>
       <td><p>Logical; If TRUE, return a list with raster and data.frames
 if FALSE, only data.frame.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>logical</p></td>
     </tr>
     </table>
     
@@ -165,15 +174,16 @@ if FALSE, only data.frame.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>cetesb</span>)
-<span class='co'>#use your wrfout</span>
-<span class='co'>#wrf &lt;- "~/Documentos/wrfo/wrfoA.nc"</span>
-<span class='no'>t2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"T2"</span>, <span class='st'>"o3"</span>, <span class='st'>"no"</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>xtractor</span>(<span class='kw'>atmos</span> <span class='kw'>=</span> <span class='no'>wrf</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='no'>t2</span>, <span class='kw'>points</span> <span class='kw'>=</span> <span class='no'>cetesb</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, ],
-<span class='kw'>stations</span> <span class='kw'>=</span> <span class='no'>cetesb</span>$<span class='no'>Station</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>xtractor</span>(<span class='kw'>atmos</span> <span class='kw'>=</span> <span class='no'>wrf</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='no'>t2</span>, <span class='kw'>points</span> <span class='kw'>=</span> <span class='no'>cetesb</span>[<span class='fl'>1</span>, ], <span class='kw'>return_list</span> <span class='kw'>=</span> <span class='no'>T</span>)
-<span class='co'># }</span></pre>
+    <pre class="examples"># NOT RUN {
+data(cetesb)
+#use your wrfout
+#wrf <- "~/Documentos/wrfo/wrfoA.nc"
+t2 = c("T2", "o3", "no")
+df <- xtractor(atmos = wrf, vars = t2, points = cetesb,
+stations = cetesb$Station[1:3])
+r <- xtractor(atmos = wrf, vars = t2, points = cetesb return_list = T)
+# }
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -196,7 +206,7 @@ if FALSE, only data.frame.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

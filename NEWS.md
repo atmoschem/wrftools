@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.3.1 (Release date: 2018-12-09)
+ vein 0.4.1 (Release date: 2019-08-10)
+
+- xtractor now supports many poitns and returns sf
+
+## vein 0.3.1 (Release date: 2018-12-09)
 
 - add project_wrf, to project wrf output files to any EPSG projection.
 

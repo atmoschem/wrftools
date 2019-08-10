@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Divide data.frames — covnox • wrftools</title>
+<title>project your wrfout files to any EPSG projection — project_wrf • wrftools</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Divide data.frames — covnox" />
+<meta property="og:title" content="project your wrfout files to any EPSG projection — project_wrf" />
 
-<meta property="og:description" content="Return data.frame sf" />
+<meta property="og:description" content="Read a wrfout file, project its coordinates and put them back" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -102,44 +102,71 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Divide data.frames</h1>
-    <small class="dont-index">Source: <a href='https://github.com/atmoschem/wrftools/blob/master/R/covnox.R'><code>R/covnox.R</code></a></small>
-    <div class="hidden name"><code>covnox.Rd</code></div>
+    <h1>project your wrfout files to any EPSG projection</h1>
+    <small class="dont-index">Source: <a href='https://github.com/atmoschem/wrftools/blob/master/R/project_wrf.R'><code>R/project_wrf.R</code></a></small>
+    <div class="hidden name"><code>project_wrf.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Return data.frame sf</p>
+    <p>Read a wrfout file, project its coordinates and put them back</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>covnox</span>(<span class='no'>cov</span>, <span class='no'>nox</span>, <span class='no'>geo</span>)</pre>
+    <pre class="usage"><span class='fu'>project_wrf</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.choose'>file.choose</a></span>(), <span class='kw'>map_proj</span> <span class='kw'>=</span> <span class='st'>"lambert"</span>, <span class='no'>truelat1</span>,
+  <span class='no'>truelat2</span>, <span class='no'>stand_lon</span>, <span class='kw'>epsg_target</span> <span class='kw'>=</span> <span class='st'>"+init=epsg:32719"</span>,
+  <span class='kw'>map_proj_char_target</span> <span class='kw'>=</span> <span class='st'>"UTM"</span>, <span class='kw'>backup_path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>(),
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>cov</th>
-      <td><p>Data-frame of numerics</p></td>
+      <th>file</th>
+      <td><p>name of file interactively (default) or specified</p></td>
     </tr>
     <tr>
-      <th>nox</th>
-      <td><p>Data-frame of numerics</p></td>
+      <th>map_proj</th>
+      <td><p>"lambert" or "mercator"</p></td>
     </tr>
     <tr>
-      <th>geo</th>
-      <td><p>'sf'</p></td>
+      <th>truelat1</th>
+      <td><p>return a raster instead of an array</p></td>
+    </tr>
+    <tr>
+      <th>truelat2</th>
+      <td><p>crs to use if as_raster is TRUE</p></td>
+    </tr>
+    <tr>
+      <th>stand_lon</th>
+      <td><p>level for rasters from a 4D variable</p></td>
+    </tr>
+    <tr>
+      <th>epsg_target</th>
+      <td><p>level for rasters from a 4D variable</p></td>
+    </tr>
+    <tr>
+      <th>map_proj_char_target</th>
+      <td><p>level for rasters from a 4D variable</p></td>
+    </tr>
+    <tr>
+      <th>backup_path</th>
+      <td><p>level for rasters from a 4D variable</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>level for rasters from a 4D variable</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Return data.frame or 'sf'</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"># NOT RUN {
-#do not run
+# dont run
+project_wrf(file = "wrfout_d01_2016-12-31_00:00:00",
+            truelat1 = -30,
+            truelat2 = -60,
+            stand_lo n =-71.626119)
 # }
 </pre>
   </div>
@@ -147,9 +174,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 
