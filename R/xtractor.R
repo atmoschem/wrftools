@@ -1,4 +1,4 @@
-#' extractor from atmospheric models
+#' Extract several variables from WRF outputs
 #'
 #' @description Return data.framee or list of raster and df from points.
 #' @param atmos Character; path to output of model (wrfout)
@@ -17,7 +17,7 @@
 #' @importFrom eixport wrf_get
 #' @importFrom ncdf4 nc_open ncvar_get
 #' @importFrom raster extract brick raster
-#' @importFrom sf st_as_sf st_transform as_Spatial st_sf
+#' @importFrom sf st_as_sf st_transform as_Spatial
 #' @importFrom methods as
 #' @note Based on NCL scrip xtractor from DCA/IAG/USP
 #' @export
@@ -108,10 +108,9 @@ xtractor <- function (atmos,
 # hasta aqui
 
 
-  if (class(atmos)[1] == "character") {
 
     if(verbose)   cat(paste0("Extracting data\n\n"))
- df <- list()
+df <- list()
 lista <- list()
 for(j in 1:length(stations)) {
 	 for (i in 1:length(lr)) {
@@ -125,11 +124,13 @@ for(j in 1:length(stations)) {
       dff <- data.frame(x = unlist(df[[i]]))
       dff
     })
+    
     dft = do.call("cbind", dft)
     names(dft) <- c(vars)
     dft$Time <- times
     dft$Station = stations[j]
-    dft <- sf::st_sf(dft, geometry = sf::st_sfc(sf::st_as_sf(points)))
+    dft <- merge(dft, points, by = "Station", all.x = T)
+    dft <- sf::st_sf(dft, geometry = dft$geometry)
     lista[[j]] <- dft
 	}
     dft = do.call("rbind", lista)
@@ -149,5 +150,4 @@ for(j in 1:length(stations)) {
     else {
       return(dft)
     }
-  }
 }
