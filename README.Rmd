@@ -25,7 +25,7 @@ You need [sf](https://github.com/r-spatial/sf) and [mapview](https://github.com/
 devtools::install_github("atmoschem/wrftools")
 ```
 
-## wrf_domains
+## wrf_domains (bug for mid latitudes, good for low latitude regions)
 
 wrf_domains returns a list of:
 
