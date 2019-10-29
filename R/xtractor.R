@@ -22,6 +22,7 @@
 #' @note Based on NCL scrip xtractor from DCA/IAG/USP
 #' @export
 #' @examples \dontrun{
+#' # do not run
 #' data(cetesb)
 #' #use your wrfout
 #' #wrf <- "~/Documentos/wrfo/wrfoA.nc"
@@ -124,7 +125,7 @@ for(j in 1:length(stations)) {
       dff <- data.frame(x = unlist(df[[i]]))
       dff
     })
-    
+
     dft = do.call("cbind", dft)
     names(dft) <- c(vars)
     dft$Time <- times

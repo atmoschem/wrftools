@@ -1,7 +1,11 @@
 NEWS
 ===========
 
- vein 0.4.1 (Release date: 2019-08-10)
+# vein 0.4.2 (Release date: 2019-29-10)
+
+- adds st_bbox_wrf
+
+## vein 0.4.1 (Release date: 2019-08-10)
 
 - xtractor now supports many poitns and returns sf
 

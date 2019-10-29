@@ -42,6 +42,7 @@ Based on NCL scrip xtractor from DCA/IAG/USP
 }
 \examples{
 \dontrun{
+# do not run
 data(cetesb)
 #use your wrfout
 #wrf <- "~/Documentos/wrfo/wrfoA.nc"
