@@ -71,22 +71,23 @@
   <div class="contents col-md-9">
 
 <hr>
-<p>title: “wrftools” author: “Sergio Ibarra-Espinosa” date: “December 20, 2018” output: html_document —</p>
+<p>title: “wrftools” author: “Sergio Ibarra-Espinosa” date: “October 29, 2019” output: html_document —</p>
 <p><code>{r setup, include=FALSE} knitr::opts_chunk$set(echo = TRUE)</code></p>
 <div id="wrftools" class="section level2">
 <h2 class="hasAnchor">
 <a href="#wrftools" class="anchor"></a>wrftools</h2>
+<p>This package does 3 things</p>
+<ol>
+<li>help you to define domains</li>
+<li>extract data as points of spatial features and bricks</li>
+<li>returns st_bbox from wrf files</li>
+</ol>
 <p>I’m not an expert in WRF but i need to use it. One of the very frustating and tricky part was to make a correct namelist.wps. Hours and hours trying to get the perfect domains. This functions solves this part while providing a dynamic maps for actually viewing where are your domains.</p>
-</div>
-<div id="system-requirements" class="section level2">
-<h2 class="hasAnchor">
-<a href="#system-requirements" class="anchor"></a>System requirements</h2>
-<p>You need <a href="https://github.com/r-spatial/sf">sf</a> and <a href="https://github.com/r-spatial/mapview">mapview</a> from <a href="https://github.com/r-spatial/">r-spatial</a>.</p>
 </div>
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
-<p><code>{r eval = FALSE} devtools::install_github("atmoschem/wrftools")</code></p>
+<p><code>{r eval = FALSE} remotes::install_github("atmoschem/wrftools")</code></p>
 </div>
 <div id="wrf_domains-bug-for-mid-latitudes-good-for-low-latitude-regions" class="section level2">
 <h2 class="hasAnchor">
@@ -96,7 +97,7 @@
 <li>the map</li>
 <li>the sf object</li>
 </ol>
-<p>The arguments of wrf_domains are the same arguments of namelist.wps. IT include default values but you can change them accordingly.</p>
+<p>The arguments of wrf_domains are the same arguments of namelist.wps. It include default values but you can change them accordingly.</p>
 <pre class="{r}"><code><a href="https://rdrr.io/r/base/library.html">library(wrftools)
 a &lt;- wrf_domains()
 a[[1]] # leaflet</a></code></pre>

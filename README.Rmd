@@ -1,7 +1,7 @@
 ---
 title: "wrftools"
 author: "Sergio Ibarra-Espinosa"
-date: "December 09, 2018"
+date: "October 29, 2019"
 output: html_document
 ---
 
@@ -11,18 +11,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## wrftools
 
+This package does 3 things
+
+1. help you to define domains
+2. extract data as points of spatial features and bricks
+3. returns st_bbox from wrf files
+
 I'm not an expert in WRF but i need to use it. One of the very frustating and
 tricky part was to make a correct namelist.wps. Hours and hours trying to
 get the perfect domains. This functions solves this part while providing
 a dynamic maps for actually viewing where are your domains. 
 
-## System requirements
-You need [sf](https://github.com/r-spatial/sf) and [mapview](https://github.com/r-spatial/mapview) from [r-spatial](https://github.com/r-spatial/). 
-
-
 ## Install
 ```{r eval = FALSE}
-devtools::install_github("atmoschem/wrftools")
+remotes::install_github("atmoschem/wrftools")
 ```
 
 ## wrf_domains (bug for mid latitudes, good for low latitude regions)
@@ -33,7 +35,7 @@ wrf_domains returns a list of:
 2. the sf object
 
 The arguments of wrf_domains are the same arguments of namelist.wps.
-IT include default values but you can change them accordingly.
+It include default values but you can change them accordingly.
 
 ```{r}
 library(wrftools)

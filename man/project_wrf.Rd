@@ -2,7 +2,7 @@
 % Please edit documentation in R/project_wrf.R
 \name{project_wrf}
 \alias{project_wrf}
-\title{project your wrfout files to any EPSG projection}
+\title{DEPRECATED project your wrfout files to any EPSG projection}
 \usage{
 project_wrf(file = file.choose(), map_proj = "lambert", truelat1,
   truelat2, stand_lon, epsg_target = "+init=epsg:32719",

@@ -6,7 +6,7 @@ Authors@R: person(given = "Sergio", family = "Ibarra-Espinosa", role = c("aut", 
 Description: It provide tools to the WRF user including dynamic maps your domains, extracting information in a ggplot2-friendly way, and project your data.
 URL: https://github.com/atmoschem/wrftools
 BugReports: https://github.com/atmoschem/wrftools/issues/
-Imports: sf, leaflet, eixport, ncdf4, raster,  methods, lattice
+Imports: sf, magrittr, leaflet, eixport, ncdf4, raster,  methods, lattice
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
