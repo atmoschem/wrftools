@@ -15,6 +15,7 @@ Extracted from the report of air quality 2018
   \item{EPSG}{integer}
   \item{ENDERECO}{character}
   \item{OBSERVACOES}{Observations}
+  \item{id}{integer for Rpollution or koffing}
   \item{X}{Numeric}
   \item{Y}{Numeric}
 }}
