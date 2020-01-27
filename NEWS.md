@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+# vein 0.4.3 (Release date: 2020-01-27)
+
+- Updates CETESB data
+
 # vein 0.4.2 (Release date: 2019-29-10)
 
 - adds st_bbox_wrf

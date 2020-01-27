@@ -4,13 +4,22 @@
 \name{cetesb}
 \alias{cetesb}
 \title{Location some air quality stations CETESB}
-\format{A data frame with 288 rows and 12 variables:
+\format{A spatial data-frame with locationbs of CETESB stations, class sf.
+Extracted from the report of air quality 2018
 \describe{
-  \item{Station}{Station}
-  \item{geometry}{geometry}
+  \item{red}{type of station}
+  \item{UGRHI}{integer}
+  \item{VOCACIONAL}{Character}
+  \item{UTM_SIRGAS2000}{character}
+  \item{fuso}{integer}
+  \item{EPSG}{integer}
+  \item{ENDERECO}{character}
+  \item{OBSERVACOES}{Observations}
+  \item{X}{Numeric}
+  \item{Y}{Numeric}
 }}
 \source{
-\url{http://cetesb.sp.gov.br/ar/publicacoes-relatorios/}
+\url{https://cetesb.sp.gov.br/ar/}
 }
 \usage{
 data(cetesb)
