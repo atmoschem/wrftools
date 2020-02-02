@@ -4,10 +4,6 @@ output: github_document
 
 <!-- date: "October 29, 2019" -->
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## wrftools
 
 This package does 3 things
@@ -26,7 +22,7 @@ a dynamic maps for actually viewing where are your domains.
 remotes::install_github("atmoschem/wrftools")
 ```
 
-## wrf_domains (bug for mid latitudes, good for low latitude regions)
+## wrf_domains (better for low latitude regions)
 
 wrf_domains returns a list of:
 
@@ -36,7 +32,7 @@ wrf_domains returns a list of:
 The arguments of wrf_domains are the same arguments of namelist.wps.
 It include default values but you can change them accordingly.
 
-```{r}
+```{r, eval = F}
 library(wrftools)
 a <- wrf_domains()
 a[[1]] # leaflet
@@ -55,6 +51,7 @@ Which returns data.frame ready for ggplot2. The class of Time is POSIXct
 
 ```{r eval = FALSE}
 data(cetesb)
+cetesb <- cetesb[!is.na(cetesb$Station), "Station"]
 #use your wrfout
 wrf <- "wrfoA.nc"
 t2 = c("T2", "o3", "no", "no2", "PM10", "PM2_5_DRY")

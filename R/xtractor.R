@@ -24,6 +24,7 @@
 #' @examples \dontrun{
 #' # do not run
 #' data(cetesb)
+#' cetesb <- cetesb[!is.na(cetesb$Station), "Station"]
 #' #use your wrfout
 #' #wrf <- "~/Documentos/wrfo/wrfoA.nc"
 #' t2 = c("T2", "o3", "no")
