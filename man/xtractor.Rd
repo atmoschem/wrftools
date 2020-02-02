@@ -4,9 +4,18 @@
 \alias{xtractor}
 \title{Extract several variables from WRF outputs}
 \usage{
-xtractor(atmos, vars, level = 1, points, stations = "CC",
-  crs_points = 4326, model = "WRF", tz = "America/Sao_Paulo",
-  return_list = FALSE, verbose = TRUE)
+xtractor(
+  atmos,
+  vars,
+  level = 1,
+  points,
+  stations = "CC",
+  crs_points = 4326,
+  model = "WRF",
+  tz = "America/Sao_Paulo",
+  return_list = FALSE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{atmos}{Character; path to output of model (wrfout)}

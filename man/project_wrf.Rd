@@ -4,10 +4,17 @@
 \alias{project_wrf}
 \title{DEPRECATED project your wrfout files to any EPSG projection}
 \usage{
-project_wrf(file = file.choose(), map_proj = "lambert", truelat1,
-  truelat2, stand_lon, epsg_target = "+init=epsg:32719",
-  map_proj_char_target = "UTM", backup_path = getwd(),
-  verbose = TRUE)
+project_wrf(
+  file = file.choose(),
+  map_proj = "lambert",
+  truelat1,
+  truelat2,
+  stand_lon,
+  epsg_target = "+init=epsg:32719",
+  map_proj_char_target = "UTM",
+  backup_path = getwd(),
+  verbose = TRUE
+)
 }
 \arguments{
 \item{file}{name of file interactively (default) or specified}

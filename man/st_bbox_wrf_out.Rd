@@ -6,6 +6,11 @@
 \usage{
 st_bbox_wrf_out(filewrf, crs = 4326)
 }
+\arguments{
+\item{filewrf}{wrf file}
+
+\item{crs}{epsg code number (see http://spatialreference.org/ref/epsg/)}
+}
 \description{
 st_bbox_wrf_out
 }

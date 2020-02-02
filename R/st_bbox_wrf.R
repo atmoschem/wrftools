@@ -7,8 +7,8 @@
 #' \code{\link{st_bbox_wrf_out}} is for wrf outs #TODO CHECK
 #' \code{\link{st_bbox_wrf_geo}} is for wrf outs #TODO CHECK
 #' @param filewrf wrf file
-#' @param type Type of wrf file: "input", "geo", "out", "chemi", "bdy"
 #' @param crs epsg code number (see http://spatialreference.org/ref/epsg/)
+#' @param type Type of wrf file: "input", "geo", "out", "chemi", "bdy"
 #'
 #' @importFrom ncdf4 ncvar_get
 #' @importFrom sf st_crs st_bbox
@@ -40,6 +40,8 @@ st_bbox_wrf <- function(filewrf, type = "geo", crs = 4326){
 
 #' @export
 #' @title st_bbox_wrf_input
+#' @param filewrf wrf file
+#' @param crs epsg code number (see http://spatialreference.org/ref/epsg/)
 #' @rdname st_bbox_wrf_input
 st_bbox_wrf_input <- function(filewrf, crs = 4326){
   wrf <- ncdf4::nc_open(filewrf)
@@ -55,6 +57,8 @@ st_bbox_wrf_input <- function(filewrf, crs = 4326){
 
 #' @export
 #' @title st_bbox_wrf_chemi
+#' @param filewrf wrf file
+#' @param crs epsg code number (see http://spatialreference.org/ref/epsg/)
 #' @rdname st_bbox_wrf_chemi
 st_bbox_wrf_chemi <- function(filewrf, crs = 4326){
   wrf <- ncdf4::nc_open(filewrf)
@@ -71,6 +75,8 @@ st_bbox_wrf_chemi <- function(filewrf, crs = 4326){
 
 #' @export
 #' @title st_bbox_wrf_bdy
+#' @param filewrf wrf file
+#' @param crs epsg code number (see http://spatialreference.org/ref/epsg/)
 #' @rdname st_bbox_wrf_bdy
 st_bbox_wrf_bdy <- function(filewrf, crs = 4326){
   wrf <- ncdf4::nc_open(filewrf)
@@ -86,6 +92,8 @@ st_bbox_wrf_bdy <- function(filewrf, crs = 4326){
 
 #' @export
 #' @title st_bbox_wrf_out
+#' @param filewrf wrf file
+#' @param crs epsg code number (see http://spatialreference.org/ref/epsg/)
 #' @rdname st_bbox_wrf_out
 st_bbox_wrf_out <- function(filewrf, crs = 4326){
   wrf <- ncdf4::nc_open(filewrf)
@@ -102,6 +110,8 @@ st_bbox_wrf_out <- function(filewrf, crs = 4326){
 
 #' @export
 #' @title st_bbox_wrf_geo
+#' @param filewrf wrf file
+#' @param crs epsg code number (see http://spatialreference.org/ref/epsg/)
 #' @rdname st_bbox_wrf_geo
 st_bbox_wrf_geo <- function(filewrf, crs = 4326){
   wrf <- ncdf4::nc_open(filewrf)

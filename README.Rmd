@@ -1,9 +1,8 @@
 ---
-title: "wrftools"
-author: "Sergio Ibarra-Espinosa"
-date: "October 29, 2019"
-output: html_document
+output: github_document
 ---
+
+<!-- date: "October 29, 2019" -->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -53,7 +52,6 @@ a[[1]] # leaflet
 
 Which returns data.frame ready for ggplot2. The class of Time is POSIXct
 
-* NOW SUPPORTS MANY POINTS*
 
 ```{r eval = FALSE}
 data(cetesb)
