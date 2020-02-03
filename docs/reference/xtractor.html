@@ -36,7 +36,8 @@
 
 
 <meta property="og:title" content="Extract several variables from WRF outputs — xtractor" />
-<meta property="og:description" content="Return data.framee or list of raster and df from points." />
+<meta property="og:description" content="Return data.framee or list of raster and df from points. When is data.frame
+contains cell value, interpolation for lat long based on neighour cells," />
 <meta name="twitter:card" content="summary" />
 
 
@@ -69,7 +70,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">wrftools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -114,7 +115,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Return data.framee or list of raster and df from points.</p>
+    <p>Return data.framee or list of raster and df from points. When is data.frame
+contains cell value, interpolation for lat long based on neighour cells,</p>
     </div>
 
     <pre class="usage"><span class='fu'>xtractor</span>(

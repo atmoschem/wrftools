@@ -44,7 +44,8 @@ if FALSE, only data.frame.}
 Return data.framee or list of raster and df
 }
 \description{
-Return data.framee or list of raster and df from points.
+Return data.framee or list of raster and df from points. When is data.frame
+contains cell value, interpolation for lat long based on neighour cells,
 }
 \note{
 Based on NCL scrip xtractor from DCA/IAG/USP
@@ -53,6 +54,7 @@ Based on NCL scrip xtractor from DCA/IAG/USP
 \dontrun{
 # do not run
 data(cetesb)
+cetesb <- cetesb[!is.na(cetesb$Station), "Station"]
 #use your wrfout
 #wrf <- "~/Documentos/wrfo/wrfoA.nc"
 t2 = c("T2", "o3", "no")

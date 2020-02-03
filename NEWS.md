@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+# vein 0.4.4 (Release date: 2020-02-03)
+
+- Updates xtractor, now returns more information
+
 # vein 0.4.3 (Release date: 2020-01-27)
 
 - Updates CETESB data
