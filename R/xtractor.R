@@ -10,6 +10,8 @@
 #' with coordinates East-weast (lat), north-south (long) and 'Station'.
 #' @param stations Character; names of stations for each point.
 #' @param crs_points Integer, crs points.
+#' @param fac_res Numeric, expansion factor for buffer. Buffer distance is based on average resolution.
+#' Hence, this factor controls the distance of the buffer.
 #' @param model Character; Currently, only "WRF"
 #' @param return_list Logical; If TRUE, return a list with raster and data.frames
 #' if FALSE, only data.frame.
@@ -40,6 +42,7 @@ xtractor <- function (atmos,
                       points,
                       stations = "CC",
                       crs_points = 4326,
+                      fac_res = 1.2,
                       model = "WRF",
                       tz = "America/Sao_Paulo",
                       return_list = FALSE,
@@ -152,14 +155,14 @@ xtractor <- function (atmos,
     rows <- raster::extract(x = lr[[1]],
                             y = sf::as_Spatial(points[j,]),
                             df = TRUE,
-                            buffer = sum(raster::res(lr[[1]]))/2*1.2)
+                            buffer = sum(raster::res(lr[[1]]))/2*fac_res)
     nrows <- nrow(rows)
 
     # mean from the values of the four nearest raster cells.
     df_x <- lapply(1:length(lr), function(i) {
       x <- raster::extract(x = lr[[i]],
                            y = sf::as_Spatial(points[j,]),
-                           buffer = sum(raster::res(lr[[i]]))/2*1.2)[[1]]
+                           buffer = sum(raster::res(lr[[i]]))/2*fac_res)[[1]]
       if(!is.matrix(x)) {
         as.data.frame(matrix(rep(unlist(x), nrows), nrow = nrows, byrow = TRUE))
       } else {

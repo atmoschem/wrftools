@@ -11,6 +11,7 @@ xtractor(
   points,
   stations = "CC",
   crs_points = 4326,
+  fac_res = 1.2,
   model = "WRF",
   tz = "America/Sao_Paulo",
   return_list = FALSE,
@@ -30,6 +31,9 @@ with coordinates East-weast (lat), north-south (long) and 'Station'.}
 \item{stations}{Character; names of stations for each point.}
 
 \item{crs_points}{Integer, crs points.}
+
+\item{fac_res}{Numeric, expansion factor for buffer. Buffer distance is based on average resolution.
+Hence, this factor controls the distance of the buffer.}
 
 \item{model}{Character; Currently, only "WRF"}
 
