@@ -184,7 +184,7 @@ xtractor <- function (atmos,
     names(dft_sd) <- paste0(vars, "_sd")
 
     dft <- cbind(dft, dft_nei, dft_mean, dft_sd)
-    df$ncells = rows
+    df$ncells = nrows
     dft$Time <- times
     dft$Station = stations[j]
     dft <- merge(dft, points, by = "Station", all.x = T)
