@@ -19,7 +19,7 @@
 #' @return Return data.framee or list of raster and df
 #' @importFrom eixport wrf_get
 #' @importFrom ncdf4 nc_open ncvar_get
-#' @importFrom raster extract brick raster
+#' @importFrom raster extract brick raster bbox
 #' @importFrom sf st_as_sf st_transform as_Spatial
 #' @importFrom methods as
 #' @importFrom stats sd
@@ -40,13 +40,16 @@ xtractor <- function (atmos,
                       vars,
                       level = 1,
                       points,
-                      stations = "CC",
+                      stations,
                       crs_points = 4326,
                       fac_res = 1.2,
                       model = "WRF",
                       tz = "America/Sao_Paulo",
                       return_list = FALSE,
                       verbose = TRUE){
+  if(!missing(stations)) {
+    warning("`stations` are not needed and they are derived from points$Stations")
+  }
   # desde aqui
   if (class(atmos)[1] == "character") {
 
@@ -112,12 +115,24 @@ xtractor <- function (atmos,
                                  4326)
     names(points) <- c("Station")
   }
+  if(verbose) cat(paste0("Cropping points for wrfout\n"))
+  db <- raster::bbox(lr[[1]])
+  points <- sf::st_crop(points,
+                        xmin = db[1,1],
+                        xmax = db[1,2],
+                        ymin = db[2,1],
+                        ymax = db[2,2])
+  stations <- points[["Station"]]
   # hasta aqui
 
 
 
   if(verbose)   cat(paste0("Extracting data\n\n"))
   lista <- list()
+
+  message("for 3D arrays such as T2, UV10 or V10, extractor with buffer returns numeric,\n
+          therefore, in this cases they are transformed into matrices, \n
+          resulting in sd equals to 0\n")
 
   for(j in 1:length(stations)) {
     # direct extraction
@@ -155,26 +170,23 @@ xtractor <- function (atmos,
     rows <- raster::extract(x = lr[[1]],
                             y = sf::as_Spatial(points[j,]),
                             df = TRUE,
-                            buffer = sum(raster::res(lr[[1]]))/2*fac_res)
+                            buffer = sum(raster::res(lr[[1]]))/2*1.2)
     nrows <- nrow(rows)
 
     # mean from the values of the four nearest raster cells.
     df_x <- lapply(1:length(lr), function(i) {
       x <- raster::extract(x = lr[[i]],
                            y = sf::as_Spatial(points[j,]),
-                           buffer = sum(raster::res(lr[[i]]))/2*fac_res)[[1]]
+                           buffer = sum(raster::res(lr[[i]]))/2*1.2)[[1]]
       if(!is.matrix(x)) {
         as.data.frame(matrix(rep(unlist(x), nrows), nrow = nrows, byrow = TRUE))
       } else {
         as.data.frame(x)
       }
     })
-    message("for 3D arrays such as T2, UV10 or V10, extractor with buffer returns numeric,\n
-          therefore, in this cases they are transformed into matrices, \n
-          resulting in sd equals to 0\n\n")
     l_mean <- lapply(df_x, colMeans, na.rm = TRUE)
     l_sd <- lapply(1:length(df_x), function(i){
-      unlist(lapply(df_x[[i]], stats::sd, na.rm = TRUE))
+      unlist(lapply(df_x[[i]], sd, na.rm = TRUE))
     })
 
     dft_mean = as.data.frame(do.call("cbind", l_mean))
@@ -184,7 +196,7 @@ xtractor <- function (atmos,
     names(dft_sd) <- paste0(vars, "_sd")
 
     dft <- cbind(dft, dft_nei, dft_mean, dft_sd)
-    df$ncells = nrows
+    df$ncells = rows
     dft$Time <- times
     dft$Station = stations[j]
     dft <- merge(dft, points, by = "Station", all.x = T)

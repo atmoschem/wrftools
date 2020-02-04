@@ -9,7 +9,7 @@ xtractor(
   vars,
   level = 1,
   points,
-  stations = "CC",
+  stations,
   crs_points = 4326,
   fac_res = 1.2,
   model = "WRF",
