@@ -127,10 +127,10 @@ xtractor <- function (atmos,
 
 
 
-  if(verbose)   cat(paste0("Extracting data\n\n"))
+  if(verbose)   cat(paste0("Extracting data\n"))
   lista <- list()
 
-  message("for 3D arrays such as T2, UV10 or V10, extractor with buffer returns numeric,\n
+  message("for 3D arrays such as T2, U10 or V10, extractor with buffer returns numeric,\n
           therefore, in this cases they are transformed into matrices, \n
           resulting in sd equals to 0\n")
 
