@@ -8,10 +8,10 @@
 #' @param tz Character; Time zone
 #' @param points data.frame, matrix, SpatialPointsDataFrame or sf 'POINTS',
 #' with coordinates East-weast (lat), north-south (long) and 'Station'.
-#' @param stations Character; names of stations for each point.
+#' @param fac_res Numeric. Expansion factor for buffer distance. The buffer distane is
+#' calculated as the average of the resolution times fac_res
+#' @param stations Character; names of stations for each point. (DEPRECATED)
 #' @param crs_points Integer, crs points.
-#' @param fac_res Numeric, expansion factor for buffer. Buffer distance is based on average resolution.
-#' Hence, this factor controls the distance of the buffer.
 #' @param model Character; Currently, only "WRF"
 #' @param return_list Logical; If TRUE, return a list with raster and data.frames
 #' if FALSE, only data.frame.
@@ -40,15 +40,15 @@ xtractor <- function (atmos,
                       vars,
                       level = 1,
                       points,
+                      fac_res = 1.2,
                       stations,
                       crs_points = 4326,
-                      fac_res = 1.2,
                       model = "WRF",
                       tz = "America/Sao_Paulo",
                       return_list = FALSE,
                       verbose = TRUE){
   if(!missing(stations)) {
-    warning("`stations` are not needed and they are derived from points$Stations")
+    message("`stations` are not needed and they are derived from points$Stations")
   }
   # desde aqui
   if (class(atmos)[1] == "character") {
@@ -128,10 +128,6 @@ xtractor <- function (atmos,
   if(verbose)   cat(paste0("Extracting data\n"))
   lista <- list()
 
-  message("for 3D arrays such as T2, U10 or V10, extractor with buffer returns numeric,\n
-          therefore, in this cases they are transformed into matrices, \n
-          resulting in sd equals to 0\n")
-
   for(j in 1:length(stations)) {
     # direct extraction
     df <- lapply(1:length(lr), function(i) {
@@ -164,37 +160,44 @@ xtractor <- function (atmos,
     dft_nei = do.call("cbind", dft_nei)
     names(dft_nei) <- paste0(vars, "_nei")
 
-    # number of rows (retorna lista)
-    rows <- raster::extract(x = lr[[1]],
-                            y = sf::as_Spatial(points[j,]),
-                            df = TRUE,
-                            buffer = sum(raster::res(lr[[1]]))/2*1.2)
-    nrows <- nrow(rows)
-
-    # mean from the values of the four nearest raster cells.
-    df_x <- lapply(1:length(lr), function(i) {
-      x <- raster::extract(x = lr[[i]],
-                           y = sf::as_Spatial(points[j,]),
-                           buffer = sum(raster::res(lr[[i]]))/2*1.2)[[1]]
-      if(!is.matrix(x)) {
-        as.data.frame(matrix(rep(unlist(x), nrows), nrow = nrows, byrow = TRUE))
-      } else {
-        as.data.frame(x)
-      }
+    # interpolation MEAN
+    df_mean <- lapply(1:length(lr), function(i) {
+      raster::extract(x = lr[[i]],
+                      y = sf::as_Spatial(points[j,]),
+                      df = TRUE,
+                      fun = function(x,...)mean(x),
+                      buffer = sum(raster::res(lr[[1]]))/2*fac_res)
     })
-    l_mean <- lapply(df_x, colMeans, na.rm = TRUE)
-    l_sd <- lapply(1:length(df_x), function(i){
-      unlist(lapply(df_x[[i]], sd, na.rm = TRUE))
+    dft_mean <- lapply(1:length(df_mean), function(i) {
+      df_mean[[i]]$ID <- NULL
+      names(df_mean[[i]]) <- times
+      dff <- data.frame(x = unlist(df_nei[[i]]))
+      dff
     })
-
-    dft_mean = as.data.frame(do.call("cbind", l_mean))
+    dft_mean = do.call("cbind", dft_mean)
+    dft_mean <- dft_mean[row.names(dft_mean) != "ID", ]
     names(dft_mean) <- paste0(vars, "_mean")
 
-    dft_sd = as.data.frame(do.call("cbind", l_sd))
+    # interpolation SD
+    df_sd <- lapply(1:length(lr), function(i) {
+      raster::extract(x = lr[[i]],
+                      y = sf::as_Spatial(points[j,]),
+                      df = TRUE,
+                      fun = function(x,...)sd(x, na.rm = TRUE),
+                      buffer = sum(raster::res(lr[[1]]))/2*fac_res)
+    })
+    dft_sd <- lapply(1:length(df_sd), function(i) {
+      df_sd[[i]]$ID <- NULL
+      names(df_sd[[i]]) <- times
+      dff <- data.frame(x = unlist(df_sd[[i]]))
+      dff
+    })
+    dft_sd = do.call("cbind", dft_sd)
+    dft_sd <- dft_sd[row.names(dft_sd) != "ID", ]
     names(dft_sd) <- paste0(vars, "_sd")
 
     dft <- cbind(dft, dft_nei, dft_mean, dft_sd)
-    df$ncells = rows
+    #   df$ncells = rows
     dft$Time <- times
     dft$Station = stations[j]
     dft <- merge(dft, points, by = "Station", all.x = T)

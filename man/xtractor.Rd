@@ -9,9 +9,9 @@ xtractor(
   vars,
   level = 1,
   points,
+  fac_res = 1.2,
   stations,
   crs_points = 4326,
-  fac_res = 1.2,
   model = "WRF",
   tz = "America/Sao_Paulo",
   return_list = FALSE,
@@ -28,12 +28,12 @@ xtractor(
 \item{points}{data.frame, matrix, SpatialPointsDataFrame or sf 'POINTS',
 with coordinates East-weast (lat), north-south (long) and 'Station'.}
 
-\item{stations}{Character; names of stations for each point.}
+\item{fac_res}{Numeric. Expansion factor for buffer distance. The buffer distane is
+calculated as the average of the resolution times fac_res}
+
+\item{stations}{Character; names of stations for each point. (DEPRECATED)}
 
 \item{crs_points}{Integer, crs points.}
-
-\item{fac_res}{Numeric, expansion factor for buffer. Buffer distance is based on average resolution.
-Hence, this factor controls the distance of the buffer.}
 
 \item{model}{Character; Currently, only "WRF"}
 
