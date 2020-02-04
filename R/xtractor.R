@@ -125,8 +125,6 @@ xtractor <- function (atmos,
   stations <- points[["Station"]]
   # hasta aqui
 
-
-
   if(verbose)   cat(paste0("Extracting data\n"))
   lista <- list()
 
