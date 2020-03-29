@@ -6,7 +6,6 @@
 #' @param x Character; name of the column with the parameter
 #' @param Station Character; name of the column with the stations
 #' @param time Character; name of the time column with class POSIXct.
-#' @param time_spinup time object, class POSIXct to exclude observation with that time or before.
 #' @importFrom stats cor sd
 #' @return Return data.framee or list of raster and df
 #' @export
@@ -66,8 +65,6 @@ verify <- function(dfobs,
       dx <- merge(obs, mod, by = time, all.x = T)
       dx <- dx[!is.na(dx[paste0(x,".x")]   ), ]
       dx <- dx[!is.na(dx[paste0(x,".y")]   ), ]
-
-      if(!missing(time_spinup))     dx <- dx[dx[[time]] > time_spinup, ]
 
       # selecting time, Station and x
       dx <- dx[, c(time, paste0(x,".x"), paste0(x,".y"))]

@@ -16,8 +16,6 @@ verify(dfobs, dfmod, x, Station = "Station", time = "LT", time_spinup)
 \item{Station}{Character; name of the column with the stations}
 
 \item{time}{Character; name of the time column with class POSIXct.}
-
-\item{time_spinup}{time object, class POSIXct to exclude observation with that time or before.}
 }
 \value{
 Return data.framee or list of raster and df
