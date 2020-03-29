@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • wrftools</title>
+<title>Compare observations and simulations — verify • wrftools</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,9 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Compare observations and simulations — verify" />
+<meta property="og:description" content="Return data.frame with Correlation, MeanBias, SD and RSME." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -54,7 +56,7 @@
   </head>
 
   <body>
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -106,94 +108,69 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/atmoschem/wrftools/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Compare observations and simulations</h1>
+    <small class="dont-index">Source: <a href='https://github.com/atmoschem/wrftools/blob/master/R/verify.R'><code>R/verify.R</code></a></small>
+    <div class="hidden name"><code>verify.Rd</code></div>
     </div>
 
-    <div id="vein-046-release-date-2020-03-29" class="section level1">
-<h1 class="page-header">
-<a href="#vein-046-release-date-2020-03-29" class="anchor"></a>vein 0.4.6 (Release date: 2020-03-29)</h1>
-<ul>
-<li>Adds verify to calculate correlation index.</li>
-</ul>
-</div>
-    <div id="vein-044-release-date-2020-02-03" class="section level1">
-<h1 class="page-header">
-<a href="#vein-044-release-date-2020-02-03" class="anchor"></a>vein 0.4.4 (Release date: 2020-02-03)</h1>
-<ul>
-<li>Updates xtractor, now returns more information</li>
-</ul>
-</div>
-    <div id="vein-043-release-date-2020-01-27" class="section level1">
-<h1 class="page-header">
-<a href="#vein-043-release-date-2020-01-27" class="anchor"></a>vein 0.4.3 (Release date: 2020-01-27)</h1>
-<ul>
-<li>Updates CETESB data</li>
-</ul>
-</div>
-    <div id="vein-042-release-date-2019-29-10" class="section level1">
-<h1 class="page-header">
-<a href="#vein-042-release-date-2019-29-10" class="anchor"></a>vein 0.4.2 (Release date: 2019-29-10)</h1>
-<ul>
-<li>adds st_bbox_wrf</li>
-</ul>
-<div id="vein-041-release-date-2019-08-10" class="section level2">
-<h2 class="hasAnchor">
-<a href="#vein-041-release-date-2019-08-10" class="anchor"></a>vein 0.4.1 (Release date: 2019-08-10)</h2>
-<ul>
-<li>xtractor now supports many poitns and returns sf</li>
-</ul>
-</div>
-<div id="vein-031-release-date-2018-12-09" class="section level2">
-<h2 class="hasAnchor">
-<a href="#vein-031-release-date-2018-12-09" class="anchor"></a>vein 0.3.1 (Release date: 2018-12-09)</h2>
-<ul>
-<li>add project_wrf, to project wrf output files to any EPSG projection.</li>
-</ul>
-</div>
-<div id="vein-030-release-date-2018-12-09" class="section level2">
-<h2 class="hasAnchor">
-<a href="#vein-030-release-date-2018-12-09" class="anchor"></a>vein 0.3.0 (Release date: 2018-12-09)</h2>
-<ul>
-<li>replace mapview with leaflet</li>
-</ul>
-</div>
-<div id="vein-021-release-date-2018-06-25" class="section level2">
-<h2 class="hasAnchor">
-<a href="#vein-021-release-date-2018-06-25" class="anchor"></a>vein 0.2.1 (Release date: 2018-06-25)</h2>
-<ul>
-<li>Fix.</li>
-</ul>
-</div>
-<div id="vein-020-release-date-2018-06-24" class="section level2">
-<h2 class="hasAnchor">
-<a href="#vein-020-release-date-2018-06-24" class="anchor"></a>vein 0.2.0 (Release date: 2018-06-24)</h2>
-<ul>
-<li>add xtractor.</li>
-</ul>
-</div>
-<div id="vein-001-release-date-2018-04-19" class="section level2">
-<h2 class="hasAnchor">
-<a href="#vein-001-release-date-2018-04-19" class="anchor"></a>vein 0.0.1 (Release date: 2018-04-19)</h2>
-<ul>
-<li>relase with wrf_domains.</li>
-</ul>
-</div>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>Return data.frame with Correlation, MeanBias, SD and RSME.</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>verify</span>(<span class='no'>dfobs</span>, <span class='no'>dfmod</span>, <span class='no'>x</span>, <span class='kw'>Station</span> <span class='kw'>=</span> <span class='st'>"Station"</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"LT"</span>, <span class='no'>time_spinup</span>)</pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>dfobs</th>
+      <td><p>data.frame in long format with columns must be Station, x and time</p></td>
+    </tr>
+    <tr>
+      <th>dfmod</th>
+      <td><p>data.frame in long format with columns must be Station, x and time</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>Character; name of the column with the parameter</p></td>
+    </tr>
+    <tr>
+      <th>Station</th>
+      <td><p>Character; name of the column with the stations</p></td>
+    </tr>
+    <tr>
+      <th>time</th>
+      <td><p>Character; name of the time column with class POSIXct.</p></td>
+    </tr>
+    <tr>
+      <th>time_spinup</th>
+      <td><p>time object, class POSIXct to exclude observation with that time or before.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Return data.framee or list of raster and df</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># do not run</span>
+<span class='co'># Columns must be Station, x and time</span>
+<span class='fu'>verify</span>(<span class='kw'>dfobs</span> <span class='kw'>=</span> <span class='no'>df_co</span>[<span class='no'>df_co</span>$<span class='no'>data</span> <span class='kw'>==</span> <span class='st'>"CETESB"</span>, <span class='fl'>1</span>:<span class='fl'>3</span>],
+       <span class='kw'>dfmod</span> <span class='kw'>=</span> <span class='no'>df_co</span>[<span class='no'>df_co</span>$<span class='no'>data</span> <span class='kw'>==</span> <span class='st'>"2016"</span>, <span class='fl'>1</span>:<span class='fl'>3</span>],
+       <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"co"</span>,
+       <span class='kw'>time_spinup</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ISOdatetime.html'>ISOdatetime</a></span>(<span class='fl'>2016</span>,<span class='fl'>4</span>,<span class='fl'>8</span>,<span class='fl'>12</span>,<span class='fl'>0</span>,<span class='fl'>0</span>))
+}</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#vein-046-release-date-2020-03-29">0.4.6</a></li>
-        <li><a href="#vein-044-release-date-2020-02-03">0.4.4</a></li>
-        <li><a href="#vein-043-release-date-2020-01-27">0.4.3</a></li>
-        <li><a href="#vein-042-release-date-2019-29-10">0.4.2</a></li>
-      </ul>
-    </div>
-  </div>
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
+  </div>
 </div>
 
 

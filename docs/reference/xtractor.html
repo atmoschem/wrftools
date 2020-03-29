@@ -70,7 +70,7 @@ contains cell value, interpolation for lat long based on neighour cells," />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">wrftools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.6</span>
       </span>
     </div>
 
@@ -124,9 +124,9 @@ contains cell value, interpolation for lat long based on neighour cells,</p>
   <span class='no'>vars</span>,
   <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='no'>points</span>,
-  <span class='kw'>stations</span> <span class='kw'>=</span> <span class='st'>"CC"</span>,
-  <span class='kw'>crs_points</span> <span class='kw'>=</span> <span class='fl'>4326</span>,
   <span class='kw'>fac_res</span> <span class='kw'>=</span> <span class='fl'>1.2</span>,
+  <span class='no'>stations</span>,
+  <span class='kw'>crs_points</span> <span class='kw'>=</span> <span class='fl'>4326</span>,
   <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"WRF"</span>,
   <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>"America/Sao_Paulo"</span>,
   <span class='kw'>return_list</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -154,17 +154,17 @@ contains cell value, interpolation for lat long based on neighour cells,</p>
 with coordinates East-weast (lat), north-south (long) and 'Station'.</p></td>
     </tr>
     <tr>
+      <th>fac_res</th>
+      <td><p>Numeric. Expansion factor for buffer distance. The buffer distane is
+calculated as the average of the resolution times fac_res</p></td>
+    </tr>
+    <tr>
       <th>stations</th>
-      <td><p>Character; names of stations for each point.</p></td>
+      <td><p>Character; names of stations for each point. (DEPRECATED)</p></td>
     </tr>
     <tr>
       <th>crs_points</th>
       <td><p>Integer, crs points.</p></td>
-    </tr>
-    <tr>
-      <th>fac_res</th>
-      <td><p>Numeric, expansion factor for buffer. Buffer distance is based on average resolution.
-Hence, this factor controls the distance of the buffer.</p></td>
     </tr>
     <tr>
       <th>model</th>

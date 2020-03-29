@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+# vein 0.4.6 (Release date: 2020-03-29)
+
+- Adds verify to calculate correlation index.
+
 # vein 0.4.4 (Release date: 2020-02-03)
 
 - Updates xtractor, now returns more information

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">wrftools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.6</span>
       </span>
     </div>
 
@@ -105,19 +105,68 @@
 <a href="#xtractor" class="anchor"></a>xtractor</h2>
 <p>(inspired in NCL from DCA/IAG/USP)</p>
 <p>Which returns data.frame ready for ggplot2. The class of Time is POSIXct</p>
+<p><em>points must have a column named “Stations”</em></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(cetesb)</a>
 <a class="sourceLine" id="cb3-2" title="2">cetesb &lt;-<span class="st"> </span>cetesb[<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(cetesb<span class="op">$</span>Station), <span class="st">"Station"</span>]</a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="co">#use your wrfout</span></a>
 <a class="sourceLine" id="cb3-4" title="4">wrf &lt;-<span class="st"> "wrfoA.nc"</span></a>
 <a class="sourceLine" id="cb3-5" title="5">t2 =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"T2"</span>, <span class="st">"o3"</span>, <span class="st">"no"</span>, <span class="st">"no2"</span>, <span class="st">"PM10"</span>, <span class="st">"PM2_5_DRY"</span>)</a>
-<a class="sourceLine" id="cb3-6" title="6">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/xtractor.html">xtractor</a></span>(<span class="dt">atmos =</span> wrf, <span class="dt">vars =</span> t2, <span class="dt">points =</span> cetesb,</a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="dt">stations =</span> cetesb<span class="op">$</span>Station)</a></code></pre></div>
-<p><img src="https://i.imgur.com/cXJZ1nI.png"></p>
+<a class="sourceLine" id="cb3-6" title="6">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/xtractor.html">xtractor</a></span>(<span class="dt">atmos =</span> wrf, <span class="dt">vars =</span> t2, <span class="dt">points =</span> cetesb)</a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(df)</a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="co"># Simple feature collection with 6 features and 31 fields</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="co"># geometry type:  POINT</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="co"># dimension:      XY</span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="co"># bbox:           xmin: -47.05721 ymin: -22.90252 xmax: -47.05721 ymax: -22.90252</span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="co"># epsg (SRID):    4326</span></a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="co"># proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="co">#           Station           o3       T2        co           no         no2</span></a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="co"># 1 Campinas-Centro 0.0136891948 291.5070 0.6858493 1.186951e-03 0.017522896</span></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="co"># 2 Campinas-Centro 0.0016979938 291.0912 0.2327648 1.000002e-06 0.010418361</span></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="co"># 3 Campinas-Centro 0.0005303844 290.4462 0.1234838 1.000000e-06 0.006545659</span></a>
+<a class="sourceLine" id="cb3-19" title="19"><span class="co"># 4 Campinas-Centro 0.0005190288 290.2115 0.1193006 1.000000e-06 0.006521403</span></a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="co"># 5 Campinas-Centro 0.0007871886 289.7922 0.1592883 1.000001e-06 0.008744552</span></a>
+<a class="sourceLine" id="cb3-21" title="21"><span class="co"># 6 Campinas-Centro 0.0007235801 289.3625 0.1483000 1.000000e-06 0.008334729</span></a>
+<a class="sourceLine" id="cb3-22" title="22"><span class="co">#         U10        V10       o3_nei   T2_nei    co_nei       no_nei     no2_nei</span></a>
+<a class="sourceLine" id="cb3-23" title="23"><span class="co"># 1 -3.828670  1.6248466 0.0134919608 291.6059 0.6849796 7.290264e-04 0.017353176</span></a>
+<a class="sourceLine" id="cb3-24" title="24"><span class="co"># 2 -3.457098  1.3129230 0.0020016744 291.1794 0.2680614 1.000003e-06 0.011742138</span></a>
+<a class="sourceLine" id="cb3-25" title="25"><span class="co"># 3 -3.317390  1.3360039 0.0006680896 290.6286 0.1547405 1.000001e-06 0.008042991</span></a>
+<a class="sourceLine" id="cb3-26" title="26"><span class="co"># 4 -3.180607  0.5178746 0.0006177527 290.2608 0.1540482 1.000000e-06 0.008429846</span></a>
+<a class="sourceLine" id="cb3-27" title="27"><span class="co"># 5 -2.915890  0.1141155 0.0008107356 289.7930 0.1822766 1.000001e-06 0.010076069</span></a>
+<a class="sourceLine" id="cb3-28" title="28"><span class="co"># 6 -2.709186 -0.2479147 0.0008365429 289.3382 0.1891523 1.000000e-06 0.010676160</span></a>
+<a class="sourceLine" id="cb3-29" title="29"><span class="co">#     U10_nei    V10_nei      o3_mean  T2_mean   co_mean      no_mean    no2_mean</span></a>
+<a class="sourceLine" id="cb3-30" title="30"><span class="co"># 1 -3.785948  1.6207790 0.0134919608 291.6059 0.6849796 7.290264e-04 0.017353176</span></a>
+<a class="sourceLine" id="cb3-31" title="31"><span class="co"># 2 -3.376240  1.2453150 0.0020016744 291.1794 0.2680614 1.000003e-06 0.011742138</span></a>
+<a class="sourceLine" id="cb3-32" title="32"><span class="co"># 3 -3.203223  1.1476679 0.0006680896 290.6286 0.1547405 1.000001e-06 0.008042991</span></a>
+<a class="sourceLine" id="cb3-33" title="33"><span class="co"># 4 -3.003846  0.5310050 0.0006177527 290.2608 0.1540482 1.000000e-06 0.008429846</span></a>
+<a class="sourceLine" id="cb3-34" title="34"><span class="co"># 5 -2.734402  0.1705305 0.0008107356 289.7930 0.1822766 1.000001e-06 0.010076069</span></a>
+<a class="sourceLine" id="cb3-35" title="35"><span class="co"># 6 -2.506655 -0.1514282 0.0008365429 289.3382 0.1891523 1.000000e-06 0.010676160</span></a>
+<a class="sourceLine" id="cb3-36" title="36"><span class="co">#    U10_mean   V10_mean        o3_sd T2_sd       co_sd        no_sd       no2_sd</span></a>
+<a class="sourceLine" id="cb3-37" title="37"><span class="co"># 1 -3.785948  1.6207790 8.958741e-04    NA 0.001191089 4.948589e-04 0.0001534891</span></a>
+<a class="sourceLine" id="cb3-38" title="38"><span class="co"># 2 -3.376240  1.2453150 2.975019e-04    NA 0.029171536 2.649172e-12 0.0011591850</span></a>
+<a class="sourceLine" id="cb3-39" title="39"><span class="co"># 3 -3.203223  1.1476679 1.706330e-04    NA 0.036130629 4.944615e-13 0.0017461727</span></a>
+<a class="sourceLine" id="cb3-40" title="40"><span class="co"># 4 -3.003846  0.5310050 1.354053e-04    NA 0.042510566 3.130691e-13 0.0023126512</span></a>
+<a class="sourceLine" id="cb3-41" title="41"><span class="co"># 5 -2.734402  0.1705305 5.089485e-05    NA 0.028024180 1.430528e-13 0.0016047246</span></a>
+<a class="sourceLine" id="cb3-42" title="42"><span class="co"># 6 -2.506655 -0.1514282 1.193552e-04    NA 0.043639222 2.625485e-13 0.0025344522</span></a>
+<a class="sourceLine" id="cb3-43" title="43"><span class="co">#   U10_sd V10_sd                Time                    geometry</span></a>
+<a class="sourceLine" id="cb3-44" title="44"><span class="co"># 1     NA     NA 2018-04-19 00:00:00 POINT (-47.05721 -22.90252)</span></a>
+<a class="sourceLine" id="cb3-45" title="45"><span class="co"># 2     NA     NA 2018-04-19 01:00:00 POINT (-47.05721 -22.90252)</span></a>
+<a class="sourceLine" id="cb3-46" title="46"><span class="co"># 3     NA     NA 2018-04-19 02:00:00 POINT (-47.05721 -22.90252)</span></a>
+<a class="sourceLine" id="cb3-47" title="47"><span class="co"># 4     NA     NA 2018-04-19 03:00:00 POINT (-47.05721 -22.90252)</span></a>
+<a class="sourceLine" id="cb3-48" title="48"><span class="co"># 5     NA     NA 2018-04-19 04:00:00 POINT (-47.05721 -22.90252)</span></a>
+<a class="sourceLine" id="cb3-49" title="49"><span class="co"># 6     NA     NA 2018-04-19 05:00:00 POINT (-47.05721 -22.90252)</span></a>
+<a class="sourceLine" id="cb3-50" title="50"><span class="co">#                    LT</span></a>
+<a class="sourceLine" id="cb3-51" title="51"><span class="co"># 1 2018-04-18 21:00:00</span></a>
+<a class="sourceLine" id="cb3-52" title="52"><span class="co"># 2 2018-04-18 22:00:00</span></a>
+<a class="sourceLine" id="cb3-53" title="53"><span class="co"># 3 2018-04-18 23:00:00</span></a>
+<a class="sourceLine" id="cb3-54" title="54"><span class="co"># 4 2018-04-19 00:00:00</span></a>
+<a class="sourceLine" id="cb3-55" title="55"><span class="co"># 5 2018-04-19 01:00:00</span></a>
+<a class="sourceLine" id="cb3-56" title="56"><span class="co"># 6 2018-04-19 02:00:00</span></a></code></pre></div>
 <p>and raster bricks</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(cptcity)</a>
 <a class="sourceLine" id="cb4-2" title="2">r &lt;-<span class="st"> </span><span class="kw"><a href="reference/xtractor.html">xtractor</a></span>(<span class="dt">atmos =</span> wrf, <span class="dt">vars =</span> t2, <span class="dt">points =</span> cetesb[<span class="dv">1</span>, ], <span class="dt">return_list =</span> T)</a>
 <a class="sourceLine" id="cb4-3" title="3"><span class="co">#  A list with raster and data.frame</span></a>
-<a class="sourceLine" id="cb4-4" title="4">sp<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/sp/man/spplot.html">spplot</a></span>(r[[<span class="dv">1</span>]][[<span class="dv">2</span>]], <span class="st">"layer.60"</span>,</a>
+<a class="sourceLine" id="cb4-4" title="4">sp<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/sp/man/spplot.html">spplot</a></span>(r<span class="op">$</span>raster[[<span class="dv">2</span>]], <span class="st">"layer.60"</span>,</a>
 <a class="sourceLine" id="cb4-5" title="5">           <span class="dt">scales =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">draw =</span> T), <span class="dt">col.regions =</span> <span class="kw"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html">cpt</a></span>(<span class="dv">1224</span>))</a></code></pre></div>
 <p><img src="https://i.imgur.com/j4d5ei5.png"></p>
 </div>
