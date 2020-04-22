@@ -1,19 +1,24 @@
 NEWS
 ===========
 
-# vein 0.4.6 (Release date: 2020-03-29)
+# vein 0.4.7 (Release date: 2020-04-20)
+
+- Improves names on cetesb.
+- add initial date and parameters mergint with Rpollution::cetesb_stations_id.
+
+## vein 0.4.6 (Release date: 2020-03-29)
 
 - Adds verify to calculate correlation index.
 
-# vein 0.4.4 (Release date: 2020-02-03)
+## vein 0.4.4 (Release date: 2020-02-03)
 
 - Updates xtractor, now returns more information
 
-# vein 0.4.3 (Release date: 2020-01-27)
+## vein 0.4.3 (Release date: 2020-01-27)
 
 - Updates CETESB data
 
-# vein 0.4.2 (Release date: 2019-29-10)
+## vein 0.4.2 (Release date: 2019-29-10)
 
 - adds st_bbox_wrf
 
