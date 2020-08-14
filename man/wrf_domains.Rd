@@ -5,19 +5,19 @@
 \title{plot WRF domains}
 \usage{
 wrf_domains(
-  max_dom = 3,
+  max_dom = 2,
   map_proj = "lambert",
   ref_lat = -21.299,
   ref_lon = -46.147,
   truelat1 = -21.456,
   truelat2 = -24.55,
   stand_lon = -46.147,
-  parent_id = c(1, 1, 2),
-  parent_grid_ratio = c(1, 5, 5),
-  i_parent_start = c(1, 41, 25),
-  j_parent_start = c(1, 31, 25),
-  e_we = c(101, 151, 21),
-  e_sn = c(99, 116, 21),
+  parent_id = c(1, 1),
+  parent_grid_ratio = c(1, 5),
+  i_parent_start = c(1, 41),
+  j_parent_start = c(1, 31),
+  e_we = c(101, 151),
+  e_sn = c(99, 116),
   dx = 25000,
   dy = 25000,
   dtm = (102.42 * 1000),
@@ -27,7 +27,7 @@ wrf_domains(
 \arguments{
 \item{max_dom}{Integer; number of domains}
 
-\item{map_proj}{Character; currently only 'lambert' and assuming crs 4326.}
+\item{map_proj}{Character; 'lambert', 'mercator', 'polar' or 'lat-lon'(crs 4326).}
 
 \item{ref_lat}{Real; Latitude coordinate of center of parent domain;}
 

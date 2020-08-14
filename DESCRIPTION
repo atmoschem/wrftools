@@ -2,7 +2,7 @@ Package: wrftools
 Type: Package
 Date: 2020-04-20
 Title: Provide tools to run WRF
-Version: 0.4.7
+Version: 0.4.8
 Authors@R: person(given = "Sergio", family = "Ibarra-Espinosa", role = c("aut", "cre"), email = "sergio.ibarra@usp.br", comment = c(ORCID = "0000-0002-3162-1905"))
 Description: It provide tools to the WRF user including dynamic maps your domains, extracting information in a ggplot2-friendly way, and project your data.
 URL: https://github.com/atmoschem/wrftools
@@ -12,4 +12,4 @@ Imports: sf, magrittr, leaflet, eixport, ncdf4, raster,  methods, lattice, stats
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1

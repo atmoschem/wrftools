@@ -1,7 +1,8 @@
 #' Location some air quality stations CETESB
 #'
+#' A spatial data-frame with locations of CETESB stations, class sf.
+#'
 #' @format A spatial data-frame with locations of CETESB stations, class sf.
-#' Extracted from the report of air quality 2018
 #' \describe{
 #'   \item{red}{type of station}
 #'   \item{UGRHI}{integer}
@@ -15,7 +16,7 @@
 #'   \item{X}{Numeric}
 #'   \item{Y}{Numeric}
 #'   \item{stationname}{Character}
-#'   \item{initial_date}Character
+#'   \item{initial_date}{Character}
 #'   \item{BEN}{Character}
 #'   \item{CO}{Character}
 #'   \item{ERT}{Character}
@@ -33,6 +34,7 @@
 #'   \item{address}{Character}
 #'   \item{UTM_SIRGAS_2000}{Character}
 #'   \item{geometry}{Character}
+#'   data(cetesb)
 #' }
 #' @source \url{https://cetesb.sp.gov.br/ar/}
 #' @usage data(cetesb)

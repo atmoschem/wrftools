@@ -3,7 +3,7 @@
 #' @description \code{\link{wrf_domains}} plots domains on dynamic map.
 #'
 #' @param max_dom Integer; number of domains
-#' @param map_proj Character; currently only 'lambert' and assuming crs 4326.
+#' @param map_proj Character; 'lambert', 'mercator', 'polar' or 'lat-lon'(crs 4326).
 #' @param ref_lat Real; Latitude coordinate of center of parent domain;
 #' @param ref_lon Real; Longitude coordinate of center of parent domain;
 #' @param truelat1 Real; the first true latitude for the Lambert conformal
@@ -58,19 +58,19 @@
 #' @examples {
 #' a <- wrf_domains()
 #' }
-wrf_domains <- function(max_dom = 3,
+wrf_domains <- function(max_dom = 2,
                   map_proj = 'lambert',
                   ref_lat   = -21.299,
                   ref_lon   = -46.147,
                   truelat1  = -21.456,
                   truelat2  = -24.550,
                   stand_lon = -46.147,
-                  parent_id = c(1,   1,   2),
-                  parent_grid_ratio =    c(1,   5,   5),
-                  i_parent_start    =    c(1,  41,  25),
-                  j_parent_start    =    c(1,  31,  25),
-                  e_we              =  c(101, 151, 21),
-                  e_sn              =  c(99, 116, 21),
+                  parent_id = c(1,   1),#,   2),
+                  parent_grid_ratio =    c(1,   5),#,   5),
+                  i_parent_start    =    c(1,  41),#,  25),
+                  j_parent_start    =    c(1,  31),#,  25),
+                  e_we              =  c(101, 151),#, 21),
+                  e_sn              =  c(99, 116),#, 21),
                   dx = 25000,
                   dy = 25000,
                   dtm = (102.42*1000),
@@ -78,10 +78,30 @@ wrf_domains <- function(max_dom = 3,
                   ) {
 
   if(map_proj == "lambert"){
-    crs = 4326
+    # crs = 4326
+    crs = paste0("+proj=lcc +lat_1=",
+                 ref_lat, " +lat_2=",
+                 truelat1, " +lat_0=",
+                 truelat2, " +lon_0=",
+                 ref_lon," +datum=WGS84")
+  } else if(map_proj == "mercator"){
+    crs = paste0("+proj=merc +lat_1=",
+                 ref_lat, " +lat_2=",
+                 truelat1, " +lat_0=",
+                 truelat2, " +lon_0=",
+                 ref_lon," +datum=WGS84")
+  } else if(map_proj == "polar"){
+    crs = paste0("+proj=stere +lat_1=",
+                 ref_lat, " +lat_2=",
+                 truelat1, " +lat_0=",
+                 truelat2, " +lon_0=",
+                 ref_lon," +datum=WGS84")
   } else {
-    warning("Assuming 4326 for 'lambert'. Help me to improve this 'sergio.ibarra@usp.br'. thx")
+    crs = 4326
   }
+
+  message(crs)
+
 
   geometry <- st_sfc(st_point(c(ref_lon, ref_lat)))
   centro <- st_sf(a = 1, geometry, crs = crs)

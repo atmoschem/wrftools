@@ -4,22 +4,22 @@
 \name{cetesb}
 \alias{cetesb}
 \title{Location some air quality stations CETESB}
-\format{A spatial data-frame with locations of CETESB stations, class sf.
-Extracted from the report of air quality 2018
+\format{
+A spatial data-frame with locations of CETESB stations, class sf.
 \describe{
   \item{red}{type of station}
   \item{UGRHI}{integer}
   \item{VOCACIONAL}{Character}
-  \item{UTM_SIRGAS2000}{character}
-  \item{fuso}{integer}
-  \item{EPSG}{integer}
-  \item{ENDERECO}{character}
+  \item{UTM_SIRGAS2000}{Character}
+  \item{fuso}{Integer}
+  \item{EPSG}{Integer}
+  \item{ENDERECO}{Character}
   \item{OBSERVACOES}{Observations}
-  \item{id}{integer for Rpollution or koffing}
+  \item{id}{Integer for Rpollution or koffing}
   \item{X}{Numeric}
   \item{Y}{Numeric}
   \item{stationname}{Character}
-  \item{initial_date}Character
+  \item{initial_date}{Character}
   \item{BEN}{Character}
   \item{CO}{Character}
   \item{ERT}{Character}
@@ -37,7 +37,9 @@ Extracted from the report of air quality 2018
   \item{address}{Character}
   \item{UTM_SIRGAS_2000}{Character}
   \item{geometry}{Character}
-}}
+  data(cetesb)
+}
+}
 \source{
 \url{https://cetesb.sp.gov.br/ar/}
 }
@@ -45,6 +47,6 @@ Extracted from the report of air quality 2018
 data(cetesb)
 }
 \description{
-Location some air quality stations CETESB
+A spatial data-frame with locations of CETESB stations, class sf.
 }
 \keyword{datasets}

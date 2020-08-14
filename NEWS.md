@@ -5,6 +5,7 @@ NEWS
 
 - Improves names on cetesb.
 - add initial date and parameters mergint with Rpollution::cetesb_stations_id.
+- Updaetd CRS in wrf_domains 
 
 ## vein 0.4.6 (Release date: 2020-03-29)
 

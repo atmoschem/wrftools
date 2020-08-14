@@ -6,6 +6,7 @@
 #' @param x Character; name of the column with the parameter
 #' @param Station Character; name of the column with the stations
 #' @param time Character; name of the time column with class POSIXct.
+#' @param time_spinup Character; time to filter
 #' @importFrom stats cor sd
 #' @return Return data.framee or list of raster and df
 #' @export
