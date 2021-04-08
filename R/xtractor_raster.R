@@ -69,17 +69,16 @@ xtractor_raster <- function (br,
   if(!missing(times)){
     if(length(times) != raster::nlayers(br)) stop("length times and nlayers are different!")
     dft$Time <- times
+    dft$Time <- as.POSIXct(x = dft$Time, format = "H%Y-%m-%d_%H:%M:%S",
+                           tz = "GMT")
+    dft$LT <- dft$Time
+    attr(dft$LT, "tzone") <- tz
 
   }  else {
-    dft$Time <- 1:(raster::nlayers(br))
+    dft$Time <- seq_along(raster::nlayers(br))
   }
     dft <- merge(dft, points, by = "Station", all = T)
 
-  # times
-  dft$Time <- as.POSIXct(x = dft$Time, format = "H%Y-%m-%d_%H:%M:%S",
-                         tz = "GMT")
-  dft$LT <- dft$Time
-  attr(dft$LT, "tzone") <- tz
   dft$Station <- as.character(dft$Station)
   dft <- sf::st_sf(dft, geometry = dft$geometry)
   return(dft[, c("x", "Station", "Time", "LT")])
