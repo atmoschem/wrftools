@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+# vein 0.4.8 (Release date: 2021-04-07)
+
+- Adds extractor_raster
+
 # vein 0.4.7 (Release date: 2020-04-20)
 
 - Improves names on cetesb.

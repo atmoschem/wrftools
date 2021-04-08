@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract several variables from WRF outputs — xtractor • wrftools</title>
+<title>Extract several variables from RasterBricks — xtractor_raster • wrftools</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Extract several variables from WRF outputs — xtractor" />
+<meta property="og:title" content="Extract several variables from RasterBricks — xtractor_raster" />
 <meta property="og:description" content="Return data.framee or list of raster and df from points. When is data.frame
-contains cell value, interpolation for lat long based on neighour cells,
-Return data.framee or list of raster and df from points. When is data.frame
 contains cell value, interpolation for lat long based on neighour cells," />
 
 
@@ -114,43 +112,23 @@ contains cell value, interpolation for lat long based on neighour cells," />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract several variables from WRF outputs</h1>
-    <small class="dont-index">Source: <a href='https://github.com/atmoschem/wrftools/blob/master/R/meta_wrf.R'><code>R/meta_wrf.R</code></a>, <a href='https://github.com/atmoschem/wrftools/blob/master/R/xtractor.R'><code>R/xtractor.R</code></a></small>
-    <div class="hidden name"><code>xtractor.Rd</code></div>
+    <h1>Extract several variables from RasterBricks</h1>
+    <small class="dont-index">Source: <a href='https://github.com/atmoschem/wrftools/blob/master/R/xtractor_raster.R'><code>R/xtractor_raster.R</code></a></small>
+    <div class="hidden name"><code>xtractor_raster.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Return data.framee or list of raster and df from points. When is data.frame
 contains cell value, interpolation for lat long based on neighour cells,</p>
-<p>Return data.framee or list of raster and df from points. When is data.frame
-contains cell value, interpolation for lat long based on neighour cells,</p>
     </div>
 
-    <pre class="usage"><span class='fu'>xtractor</span><span class='op'>(</span>
-  <span class='va'>atmos</span>,
-  <span class='va'>vars</span>,
-  level <span class='op'>=</span> <span class='fl'>1</span>,
+    <pre class="usage"><span class='fu'>xtractor_raster</span><span class='op'>(</span>
+  <span class='va'>br</span>,
+  <span class='va'>var</span>,
   <span class='va'>points</span>,
-  fac_res <span class='op'>=</span> <span class='fl'>1.2</span>,
-  <span class='va'>stations</span>,
+  <span class='va'>times</span>,
   crs_points <span class='op'>=</span> <span class='fl'>4326</span>,
-  model <span class='op'>=</span> <span class='st'>"WRF"</span>,
   tz <span class='op'>=</span> <span class='st'>"America/Sao_Paulo"</span>,
-  return_list <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
-
-<span class='fu'>xtractor</span><span class='op'>(</span>
-  <span class='va'>atmos</span>,
-  <span class='va'>vars</span>,
-  level <span class='op'>=</span> <span class='fl'>1</span>,
-  <span class='va'>points</span>,
-  fac_res <span class='op'>=</span> <span class='fl'>1.2</span>,
-  <span class='va'>stations</span>,
-  crs_points <span class='op'>=</span> <span class='fl'>4326</span>,
-  model <span class='op'>=</span> <span class='st'>"WRF"</span>,
-  tz <span class='op'>=</span> <span class='st'>"America/Sao_Paulo"</span>,
-  return_list <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
@@ -158,47 +136,29 @@ contains cell value, interpolation for lat long based on neighour cells,</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>atmos</th>
-      <td><p>Character; path to output of model (wrfout)</p></td>
+      <th>br</th>
+      <td><p>RasterBrick</p></td>
     </tr>
     <tr>
-      <th>vars</th>
-      <td><p>Character; Variable with has 3 or 4 dimensions.</p></td>
-    </tr>
-    <tr>
-      <th>level</th>
-      <td><p>Integer; Which level</p></td>
+      <th>var</th>
+      <td><p>Character; 1 word</p></td>
     </tr>
     <tr>
       <th>points</th>
       <td><p>data.frame, matrix, SpatialPointsDataFrame or sf 'POINTS',
-with coordinates East-weast (lat), north-south (long) and 'Station'.</p></td>
+with coordinates East-weast (lat), north-south (long) and <strong>Station</strong>.</p></td>
     </tr>
     <tr>
-      <th>fac_res</th>
-      <td><p>Numeric. Expansion factor for buffer distance. The buffer distane is
-calculated as the average of the resolution times fac_res</p></td>
-    </tr>
-    <tr>
-      <th>stations</th>
-      <td><p>Character; names of stations for each point. (DEPRECATED)</p></td>
+      <th>times</th>
+      <td><p>Character; UTC time (one time for each layer)</p></td>
     </tr>
     <tr>
       <th>crs_points</th>
       <td><p>Integer, crs points.</p></td>
     </tr>
     <tr>
-      <th>model</th>
-      <td><p>Character; Currently, only "WRF"</p></td>
-    </tr>
-    <tr>
       <th>tz</th>
       <td><p>Character; Time zone</p></td>
-    </tr>
-    <tr>
-      <th>return_list</th>
-      <td><p>Logical; If TRUE, return a list with raster and data.frames
-if FALSE, only data.frame.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -209,14 +169,19 @@ if FALSE, only data.frame.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Return data.framee or list of raster and df</p>
-<p>Return data.framee or list of raster and df</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Based on NCL scrip xtractor from DCA/IAG/USP</p>
-<p>Based on NCL scrip xtractor from DCA/IAG/USP</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># do not run</span>
+<span class='co'># br &lt;- brick("brfout")</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>cetesb</span><span class='op'>)</span>
+<span class='co'>#use your wrfout</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>xtractor_raster</span><span class='op'>(</span>br <span class='op'>=</span> <span class='va'>br</span>, vars <span class='op'>=</span> <span class='st'>"T2"</span>, points <span class='op'>=</span> <span class='va'>cetesb</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

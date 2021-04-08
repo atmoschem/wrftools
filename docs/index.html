@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -53,7 +53,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/atmoschem/wrftools/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -84,7 +84,8 @@
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"atmoschem/wrftools"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"atmoschem/wrftools"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="wrf_domains-better-for-low-latitude-regions" class="section level2">
 <h2 class="hasAnchor">
@@ -95,9 +96,10 @@
 <li>the sf object</li>
 </ol>
 <p>The arguments of wrf_domains are the same arguments of namelist.wps. It include default values but you can change them accordingly.</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">wrftools</span>)
-<span class="no">a</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/wrf_domains.html">wrf_domains</a></span>()
-<span class="no">a</span><span class="kw">[[</span><span class="fl">1</span>]] <span class="co"># leaflet</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/wrftools">wrftools</a></span><span class="op">)</span>
+<span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/wrf_domains.html">wrf_domains</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">a</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="co"># leaflet</span></code></pre></div>
 <p><img src="https://i.imgur.com/7giwGp6.png"></p>
 </div>
 <div id="xtractor" class="section level2">
@@ -105,20 +107,22 @@
 <a href="#xtractor" class="anchor"></a>xtractor</h2>
 <p>(inspired in NCL from DCA/IAG/USP)</p>
 <p>Which returns data.frame ready for ggplot2. The class of Time is POSIXct</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">cetesb</span>)
-<span class="no">cetesb</span> <span class="kw">&lt;-</span> <span class="no">cetesb</span>[!<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">cetesb</span>$<span class="no">Station</span>), <span class="st">"Station"</span>]
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">cetesb</span><span class="op">)</span>
+<span class="va">cetesb</span> <span class="op">&lt;-</span> <span class="va">cetesb</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">cetesb</span><span class="op">$</span><span class="va">Station</span><span class="op">)</span>, <span class="st">"Station"</span><span class="op">]</span>
 <span class="co">#use your wrfout</span>
-<span class="no">wrf</span> <span class="kw">&lt;-</span> <span class="st">"wrfoA.nc"</span>
-<span class="no">t2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"T2"</span>, <span class="st">"o3"</span>, <span class="st">"no"</span>, <span class="st">"no2"</span>, <span class="st">"PM10"</span>, <span class="st">"PM2_5_DRY"</span>)
-<span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/xtractor.html">xtractor</a></span>(<span class="kw">atmos</span> <span class="kw">=</span> <span class="no">wrf</span>, <span class="kw">vars</span> <span class="kw">=</span> <span class="no">t2</span>, <span class="kw">points</span> <span class="kw">=</span> <span class="no">cetesb</span>,
-<span class="kw">stations</span> <span class="kw">=</span> <span class="no">cetesb</span>$<span class="no">Station</span>)</pre></div>
+<span class="va">wrf</span> <span class="op">&lt;-</span> <span class="st">"wrfoA.nc"</span>
+<span class="va">t2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T2"</span>, <span class="st">"o3"</span>, <span class="st">"no"</span>, <span class="st">"no2"</span>, <span class="st">"PM10"</span>, <span class="st">"PM2_5_DRY"</span><span class="op">)</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/xtractor.html">xtractor</a></span><span class="op">(</span>atmos <span class="op">=</span> <span class="va">wrf</span>, vars <span class="op">=</span> <span class="va">t2</span>, points <span class="op">=</span> <span class="va">cetesb</span>,
+stations <span class="op">=</span> <span class="va">cetesb</span><span class="op">$</span><span class="va">Station</span><span class="op">)</span></code></pre></div>
 <p><img src="https://i.imgur.com/cXJZ1nI.png"></p>
 <p>and raster bricks</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">cptcity</span>)
-<span class="no">r</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/xtractor.html">xtractor</a></span>(<span class="kw">atmos</span> <span class="kw">=</span> <span class="no">wrf</span>, <span class="kw">vars</span> <span class="kw">=</span> <span class="no">t2</span>, <span class="kw">points</span> <span class="kw">=</span> <span class="no">cetesb</span>[<span class="fl">1</span>, ], <span class="kw">return_list</span> <span class="kw">=</span> <span class="no">T</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ibarraespinosa/cptcity">cptcity</a></span><span class="op">)</span>
+<span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/xtractor.html">xtractor</a></span><span class="op">(</span>atmos <span class="op">=</span> <span class="va">wrf</span>, vars <span class="op">=</span> <span class="va">t2</span>, points <span class="op">=</span> <span class="va">cetesb</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, return_list <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
 <span class="co">#  A list with raster and data.frame</span>
-<span class="kw pkg">sp</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/spplot.html">spplot</a></span>(<span class="no">r</span><span class="kw">[[</span><span class="fl">1</span>]]<span class="kw">[[</span><span class="fl">2</span>]], <span class="st">"layer.60"</span>,
-           <span class="kw">scales</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">draw</span> <span class="kw">=</span> <span class="no">T</span>), <span class="kw">col.regions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html">cpt</a></span>(<span class="fl">1224</span>))</pre></div>
+<span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/spplot.html">spplot</a></span><span class="op">(</span><span class="va">r</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="st">"layer.60"</span>,
+           scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>draw <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, col.regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html">cpt</a></span><span class="op">(</span><span class="fl">1224</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="https://i.imgur.com/j4d5ei5.png"></p>
 </div>
 <div id="contributing" class="section level2">
@@ -163,7 +167,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

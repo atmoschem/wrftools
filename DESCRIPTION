@@ -1,6 +1,6 @@
 Package: wrftools
 Type: Package
-Date: 2020-04-20
+Date: 2021-04-07
 Title: Provide tools to run WRF
 Version: 0.4.8
 Authors@R: person(given = "Sergio", family = "Ibarra-Espinosa", role = c("aut", "cre"), email = "sergio.ibarra@usp.br", comment = c(ORCID = "0000-0002-3162-1905"))
