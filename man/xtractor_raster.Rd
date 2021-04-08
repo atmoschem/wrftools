@@ -43,9 +43,8 @@ Based on NCL scrip xtractor from DCA/IAG/USP
 \examples{
 \dontrun{
 # do not run
-# br <- brick("brfout")
+# br <- brick("wrfout")
 data(cetesb)
-#use your wrfout
 df <- xtractor_raster(br = br, vars = "T2", points = cetesb)
 }
 }

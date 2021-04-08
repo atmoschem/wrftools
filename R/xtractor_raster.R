@@ -21,9 +21,8 @@
 #' @export
 #' @examples \dontrun{
 #' # do not run
-#' # br <- brick("brfout")
+#' # br <- brick("wrfout")
 #' data(cetesb)
-#' #use your wrfout
 #' df <- xtractor_raster(br = br, vars = "T2", points = cetesb)
 #' }
 xtractor_raster <- function (br,
@@ -58,28 +57,20 @@ xtractor_raster <- function (br,
                         xmax = db[1,2],
                         ymin = db[2,1],
                         ymax = db[2,2])
-  stations <- points[["Station"]]
+  stations <- as.character(points[["Station"]])
   # hasta aqui
 
   if(verbose)   cat(paste0("Extracting data\n"))
-  lista <- list()
-
-  for(j in 1:length(stations)) {
-    # direct extraction
-    df <- raster::extract(x = br,
-                          y = sf::as_Spatial(points[j,]),
-                          df = TRUE,
-                          method = "simple")
-    class(df)
-    dft <- data.frame(x = unlist(df[, 2:ncol(df)]))
-    names(dft) <- var
-      if(!missing(times))  dft$Time <- times else dft$Time <- 1:(raster::nlayers(br))
-    dft$Station = stations[j]
-    dft <- merge(dft, points, by = "Station", all.x = T)
-    dft <- sf::st_sf(dft, geometry = dft$geometry)
-    lista[[j]] <- dft
-  }
-  dft = do.call("rbind", lista)
+  df <- raster::extract(x = br,
+                        y = sf::as_Spatial(points),
+                        df = TRUE,
+                        method = "simple")
+  length(unlist(df[, 2:ncol(df)]))
+  nrow(df)*(ncol(df)-1)
+  dft <- data.frame(x = unlist(df[, 2:ncol(df)]),
+                    Station = rep(stations, each = ncol(df) - 1))
+  if(!missing(times))  dft$Time <- times else dft$Time <- 1:(raster::nlayers(br))
+  dft <- merge(dft, points, by = "Station", all = T)
 
   # times
   dft$Time <- as.POSIXct(x = dft$Time, format = "H%Y-%m-%d_%H:%M:%S",
@@ -87,5 +78,6 @@ xtractor_raster <- function (br,
   dft$LT <- dft$Time
   attr(dft$LT, "tzone") <- tz
   dft$Station <- as.character(dft$Station)
-  return(dft[, c(var, "Station", "Time", "LT")])
+  dft <- sf::st_sf(dft, geometry = dft$geometry)
+  return(dft[, c("Station", "Time", "LT")])
 }
