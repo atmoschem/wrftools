@@ -66,8 +66,14 @@ xtractor_raster <- function (br,
 
     dft <- data.frame(x = unlist(df[, 2:ncol(df)]),
                     Station = rep(stations, each = ncol(df) - 1))
-  if(!missing(times))  dft$Time <- times else dft$Time <- 1:(raster::nlayers(br))
-  dft <- merge(dft, points, by = "Station", all = T)
+  if(!missing(times)){
+    if(length(times) != raster::nlayers(br)) stop("length times and nlayers are different!")
+    dft$Time <- times
+
+  }  else {
+    dft$Time <- 1:(raster::nlayers(br))
+  }
+    dft <- merge(dft, points, by = "Station", all = T)
 
   # times
   dft$Time <- as.POSIXct(x = dft$Time, format = "H%Y-%m-%d_%H:%M:%S",
