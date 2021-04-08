@@ -64,8 +64,11 @@ xtractor_raster <- function (br,
                         df = TRUE,
                         method = "simple")
 
-    dft <- data.frame(x = unlist(df[, 2:ncol(df)]),
-                    Station = rep(stations, each = ncol(df) - 1))
+  if(verbose)   cat(paste0("Creating data.frame\n"))
+  dft <- data.frame(x = unlist(df[, 2:ncol(df)]),
+                    Station = rep(stations, eaLch = ncol(df) - 1))
+
+  if(verbose)   cat(paste0("Adding time\n"))
   if(!missing(times)){
     if(length(times) != raster::nlayers(br)) stop("length times and nlayers are different!")
     dft$Time <- times
@@ -73,13 +76,23 @@ xtractor_raster <- function (br,
                            tz = "GMT")
     dft$LT <- dft$Time
     attr(dft$LT, "tzone") <- tz
+    if(verbose)   cat(paste0("Merging\n"))
+    dft <- merge(dft, points, by = "Station", all.x = T)
+
+    dft$Station <- as.character(dft$Station)
+    if(verbose)   cat(paste0("Transforming in sf\n"))
+    dft <- sf::st_sf(dft, geometry = dft$geometry)
+    return(dft[, c("x", "Station", "Time", "LT")])
 
   }  else {
     dft$Time <- seq_along(raster::nlayers(br))
-  }
-    dft <- merge(dft, points, by = "Station", all = T)
+    if(verbose)   cat(paste0("Merging\n"))
+    dft <- merge(dft, points, by = "Station", all.x = T)
 
-  dft$Station <- as.character(dft$Station)
-  dft <- sf::st_sf(dft, geometry = dft$geometry)
-  return(dft[, c("x", "Station", "Time", "LT")])
+    dft$Station <- as.character(dft$Station)
+    if(verbose)   cat(paste0("Transforming in sf\n"))
+    dft <- sf::st_sf(dft, geometry = dft$geometry)
+    return(dft[, c("x", "Station", "Time")])
+
+  }
 }
