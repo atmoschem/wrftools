@@ -3,7 +3,6 @@
 #' @description Return data.framee or list of raster and df from points. When is data.frame
 #' contains cell value, interpolation for lat long based on neighour cells,
 #' @param br RasterBrick
-#' @param var Character; 1 word
 #' @param times Character; UTC time (one time for each layer)
 #' @param tz Character; Time zone
 #' @param points data.frame, matrix, SpatialPointsDataFrame or sf 'POINTS',
@@ -23,10 +22,9 @@
 #' # do not run
 #' # br <- brick("wrfout")
 #' data(cetesb)
-#' df <- xtractor_raster(br = br, vars = "T2", points = cetesb)
+#' df <- xtractor_raster(br = br,  points = cetesb)
 #' }
 xtractor_raster <- function (br,
-                             var,
                              points,
                              times,
                              crs_points = 4326,
@@ -65,9 +63,8 @@ xtractor_raster <- function (br,
                         y = sf::as_Spatial(points),
                         df = TRUE,
                         method = "simple")
-  length(unlist(df[, 2:ncol(df)]))
-  nrow(df)*(ncol(df)-1)
-  dft <- data.frame(x = unlist(df[, 2:ncol(df)]),
+
+    dft <- data.frame(x = unlist(df[, 2:ncol(df)]),
                     Station = rep(stations, each = ncol(df) - 1))
   if(!missing(times))  dft$Time <- times else dft$Time <- 1:(raster::nlayers(br))
   dft <- merge(dft, points, by = "Station", all = T)
@@ -79,5 +76,5 @@ xtractor_raster <- function (br,
   attr(dft$LT, "tzone") <- tz
   dft$Station <- as.character(dft$Station)
   dft <- sf::st_sf(dft, geometry = dft$geometry)
-  return(dft[, c("Station", "Time", "LT")])
+  return(dft[, c("x", "Station", "Time", "LT")])
 }

@@ -124,7 +124,6 @@ contains cell value, interpolation for lat long based on neighour cells,</p>
 
     <pre class="usage"><span class='fu'>xtractor_raster</span><span class='op'>(</span>
   <span class='va'>br</span>,
-  <span class='va'>var</span>,
   <span class='va'>points</span>,
   <span class='va'>times</span>,
   crs_points <span class='op'>=</span> <span class='fl'>4326</span>,
@@ -138,10 +137,6 @@ contains cell value, interpolation for lat long based on neighour cells,</p>
     <tr>
       <th>br</th>
       <td><p>RasterBrick</p></td>
-    </tr>
-    <tr>
-      <th>var</th>
-      <td><p>Character; 1 word</p></td>
     </tr>
     <tr>
       <th>points</th>
@@ -178,7 +173,7 @@ with coordinates East-weast (lat), north-south (long) and <strong>Station</stron
 <span class='co'># do not run</span>
 <span class='co'># br &lt;- brick("wrfout")</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>cetesb</span><span class='op'>)</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>xtractor_raster</span><span class='op'>(</span>br <span class='op'>=</span> <span class='va'>br</span>, vars <span class='op'>=</span> <span class='st'>"T2"</span>, points <span class='op'>=</span> <span class='va'>cetesb</span><span class='op'>)</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>xtractor_raster</span><span class='op'>(</span>br <span class='op'>=</span> <span class='va'>br</span>,  points <span class='op'>=</span> <span class='va'>cetesb</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>

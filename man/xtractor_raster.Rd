@@ -6,7 +6,6 @@
 \usage{
 xtractor_raster(
   br,
-  var,
   points,
   times,
   crs_points = 4326,
@@ -16,8 +15,6 @@ xtractor_raster(
 }
 \arguments{
 \item{br}{RasterBrick}
-
-\item{var}{Character; 1 word}
 
 \item{points}{data.frame, matrix, SpatialPointsDataFrame or sf 'POINTS',
 with coordinates East-weast (lat), north-south (long) and \strong{Station}.}
@@ -45,6 +42,6 @@ Based on NCL scrip xtractor from DCA/IAG/USP
 # do not run
 # br <- brick("wrfout")
 data(cetesb)
-df <- xtractor_raster(br = br, vars = "T2", points = cetesb)
+df <- xtractor_raster(br = br,  points = cetesb)
 }
 }
