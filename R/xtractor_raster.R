@@ -59,21 +59,29 @@ xtractor_raster <- function (br,
   # hasta aqui
 
   if(verbose)   cat(paste0("Extracting data\n"))
+
+
   df <- raster::extract(x = br,
                         y = sf::as_Spatial(points),
                         df = TRUE,
                         method = "simple")
 
   if(verbose)   cat(paste0("Creating data.frame\n"))
-  dft <- data.frame(x = unlist(df[, 2:ncol(df)]),
-                    Station = rep(stations, eaLch = ncol(df) - 1))
+  df_t2 <- as.data.frame(t(df[, 2:ncol(df)]))
+  names(df_t2) <- stations
+
+  dft <- melt.data.table(
+    data = as.data.table(df_t2),
+    variable.name = "Station",
+    value.name = "x")
 
   if(verbose)   cat(paste0("Adding time\n"))
   if(!missing(times)){
     if(length(times) != raster::nlayers(br)) stop("length times and nlayers are different!")
-    dft$Time <- times
-    dft$Time <- as.POSIXct(x = dft$Time, format = "H%Y-%m-%d_%H:%M:%S",
-                           tz = "GMT")
+    if(!inherits(times, "POSIXct")) stop("Times must have class POSIXct in GMT")
+
+    dft$Time <- rep(times, length(stations))
+    dft$Time <- as.POSIXct(dft$Time, tz = "GMT")
     dft$LT <- dft$Time
     attr(dft$LT, "tzone") <- tz
     if(verbose)   cat(paste0("Merging\n"))
