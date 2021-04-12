@@ -16,6 +16,7 @@
 #' @importFrom sf st_as_sf st_transform as_Spatial
 #' @importFrom methods as
 #' @importFrom stats sd
+#' @importFrom data.table as.data.table melt.data.table
 #' @note Based on NCL scrip xtractor from DCA/IAG/USP
 #' @export
 #' @examples \dontrun{
@@ -70,10 +71,11 @@ xtractor_raster <- function (br,
   df_t2 <- as.data.frame(t(df[, 2:ncol(df)]))
   names(df_t2) <- stations
 
-  dft <- melt.data.table(
-    data = as.data.table(df_t2),
+    dft <- suppressWarnings(data.table::melt.data.table(
+    data = data.table::as.data.table(df_t2),
+#    id.vars = names(df_t2),
     variable.name = "Station",
-    value.name = "x")
+    value.name = "x"))
 
   if(verbose)   cat(paste0("Adding time\n"))
   if(!missing(times)){
