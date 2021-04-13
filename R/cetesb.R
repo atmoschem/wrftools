@@ -33,6 +33,7 @@
 #'   \item{VV}{Character}
 #'   \item{address}{Character}
 #'   \item{UTM_SIRGAS_2000}{Character}
+#'   \item{dados}{Character: CETESB op INMET}
 #'   \item{geometry}{Character}
 #'   data(cetesb)
 #' }
