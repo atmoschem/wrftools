@@ -9,6 +9,17 @@
 #' with coordinates East-weast (lat), north-south (long) and \strong{Station}.
 #' @param crs_points Integer, crs points.
 #' @param verbose logical
+#' @param allow.cartesian logical (from data.table):
+#' prevents joins that would result in more than nrow(x)+nrow(i) rows.
+#' This is usually caused by duplicate values in i's join columns,
+#' each of which join to the same group in 'x' over and over again:
+#' a misspecified join. Usually this was not intended and the join
+#' needs to be changed. The word 'cartesian' is used loosely in
+#' this context. The traditional cartesian join is (deliberately)
+#' difficult to achieve in data.table: where every row in i joins to every
+#' row in x (a nrow(x)*nrow(i) row result). 'cartesian' is just meant
+#' in a 'large multiplicative' sense, so FALSE does not always prevent a
+#' traditional cartesian join.
 #' @return Return data.framee or list of raster and df
 #' @importFrom eixport wrf_get
 #' @importFrom ncdf4 nc_open ncvar_get
@@ -30,7 +41,8 @@ xtractor_raster <- function (br,
                              times,
                              crs_points = 4326,
                              tz = "America/Sao_Paulo",
-                             verbose = TRUE){
+                             verbose = TRUE,
+                             allow.cartesian = TRUE){
 
   # desde aqui
   if(verbose) cat(paste0("Points to sp\n"))
@@ -86,8 +98,9 @@ xtractor_raster <- function (br,
     dft$Time <- as.POSIXct(dft$Time, tz = "GMT")
     dft$LT <- dft$Time
     attr(dft$LT, "tzone") <- tz
+
     if(verbose)   cat(paste0("Merging\n"))
-    dft <- merge(dft, points, by = "Station", all.x = T)
+    dft <- merge(dft, points, by = "Station", all.x = T, allow.cartesian=allow.cartesian)
 
     dft$Station <- as.character(dft$Station)
     if(verbose)   cat(paste0("Transforming in sf\n"))
@@ -95,9 +108,10 @@ xtractor_raster <- function (br,
     return(dft[, c("x", "Station", "Time", "LT")])
 
   }  else {
-    dft$Time <- seq_along(raster::nlayers(br))
+    dft$Time <- 1:seq_along(raster::nlayers(br))
+
     if(verbose)   cat(paste0("Merging\n"))
-    dft <- merge(dft, points, by = "Station", all.x = T)
+    dft <- merge(dft, points, by = "Station", all.x = T, allow.cartesian=allow.cartesian)
 
     dft$Station <- as.character(dft$Station)
     if(verbose)   cat(paste0("Transforming in sf\n"))

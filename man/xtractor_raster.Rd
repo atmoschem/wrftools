@@ -10,7 +10,8 @@ xtractor_raster(
   times,
   crs_points = 4326,
   tz = "America/Sao_Paulo",
-  verbose = TRUE
+  verbose = TRUE,
+  allow.cartesian = TRUE
 )
 }
 \arguments{
@@ -26,6 +27,18 @@ with coordinates East-weast (lat), north-south (long) and \strong{Station}.}
 \item{tz}{Character; Time zone}
 
 \item{verbose}{logical}
+
+\item{allow.cartesian}{logical (from data.table):
+prevents joins that would result in more than nrow(x)+nrow(i) rows.
+This is usually caused by duplicate values in i's join columns,
+each of which join to the same group in 'x' over and over again:
+a misspecified join. Usually this was not intended and the join
+needs to be changed. The word 'cartesian' is used loosely in
+this context. The traditional cartesian join is (deliberately)
+difficult to achieve in data.table: where every row in i joins to every
+row in x (a nrow(x)*nrow(i) row result). 'cartesian' is just meant
+in a 'large multiplicative' sense, so FALSE does not always prevent a
+traditional cartesian join.}
 }
 \value{
 Return data.framee or list of raster and df

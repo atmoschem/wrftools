@@ -128,7 +128,8 @@ contains cell value, interpolation for lat long based on neighour cells,</p>
   <span class='va'>times</span>,
   crs_points <span class='op'>=</span> <span class='fl'>4326</span>,
   tz <span class='op'>=</span> <span class='st'>"America/Sao_Paulo"</span>,
-  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  allow.cartesian <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -158,6 +159,20 @@ with coordinates East-weast (lat), north-south (long) and <strong>Station</stron
     <tr>
       <th>verbose</th>
       <td><p>logical</p></td>
+    </tr>
+    <tr>
+      <th>allow.cartesian</th>
+      <td><p>logical (from data.table):
+prevents joins that would result in more than nrow(x)+nrow(i) rows.
+This is usually caused by duplicate values in i's join columns,
+each of which join to the same group in 'x' over and over again:
+a misspecified join. Usually this was not intended and the join
+needs to be changed. The word 'cartesian' is used loosely in
+this context. The traditional cartesian join is (deliberately)
+difficult to achieve in data.table: where every row in i joins to every
+row in x (a nrow(x)*nrow(i) row result). 'cartesian' is just meant
+in a 'large multiplicative' sense, so FALSE does not always prevent a
+traditional cartesian join.</p></td>
     </tr>
     </table>
 
