@@ -47,6 +47,7 @@ verify <- function(dfobs,
 
       df <- data.frame(Station = unique(dfobs[[Station]])[i],
                        Correlation = stats::cor(dx$obs, dx$mod),
+                       cor_pvalue = stats::cor.test(dx$obs, dx$mod)$p.value,
                        MeanBias = mean(dx$obs - dx$mod),
                        MSE = mean((dx$obs - dx$mod)^2),
                        SD = stats::sd(dx$obs - dx$mod))
@@ -74,6 +75,7 @@ verify <- function(dfobs,
 
       df <- data.frame(Station = unique(dfobs[[Station]])[i],
                        Correlation = cor(dx$obs, dx$mod),
+                       cor_pvalue = stats::cor.test(dx$obs, dx$mod)$p.value,
                        MeanBias = mean(dx$obs - dx$mod),
                        MSE = mean((dx$obs - dx$mod)^2),
                        SD = sd(dx$obs - dx$mod))
