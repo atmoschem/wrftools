@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compare observations and simulations — verify • wrftools</title>
+<title>Compare observations and simulations and apply wilcoxon R test — verify • wrftools</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Compare observations and simulations — verify" />
-<meta property="og:description" content="Return data.frame with Correlation, MeanBias, SD and RSME." />
+<meta property="og:title" content="Compare observations and simulations and apply wilcoxon R test — verify" />
+<meta property="og:description" content="Return data.frame with Correlation, MeanBias, SD, RSME and wilcoxon p.value" />
 
 
 
@@ -111,13 +111,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compare observations and simulations</h1>
+    <h1>Compare observations and simulations and apply wilcoxon R test</h1>
     <small class="dont-index">Source: <a href='https://github.com/atmoschem/wrftools/blob/master/R/verify.R'><code>R/verify.R</code></a></small>
     <div class="hidden name"><code>verify.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Return data.frame with Correlation, MeanBias, SD and RSME.</p>
+    <p>Return data.frame with Correlation, MeanBias, SD, RSME and wilcoxon p.value</p>
     </div>
 
     <pre class="usage"><span class='fu'>verify</span><span class='op'>(</span><span class='va'>dfobs</span>, <span class='va'>dfmod</span>, <span class='va'>x</span>, Station <span class='op'>=</span> <span class='st'>"Station"</span>, time <span class='op'>=</span> <span class='st'>"LT"</span>, <span class='va'>time_spinup</span><span class='op'>)</span></pre>

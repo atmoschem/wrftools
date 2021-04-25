@@ -2,7 +2,7 @@
 % Please edit documentation in R/verify.R
 \name{verify}
 \alias{verify}
-\title{Compare observations and simulations}
+\title{Compare observations and simulations and apply wilcoxon R test}
 \usage{
 verify(dfobs, dfmod, x, Station = "Station", time = "LT", time_spinup)
 }
@@ -23,7 +23,7 @@ verify(dfobs, dfmod, x, Station = "Station", time = "LT", time_spinup)
 Return data.framee or list of raster and df
 }
 \description{
-Return data.frame with Correlation, MeanBias, SD and RSME.
+Return data.frame with Correlation, MeanBias, SD, RSME and wilcoxon p.value
 }
 \examples{
 \dontrun{

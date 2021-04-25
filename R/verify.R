@@ -1,13 +1,13 @@
-#' Compare observations and simulations
+#' Compare observations and simulations and apply wilcoxon R test
 #'
-#' @description Return data.frame with Correlation, MeanBias, SD and RSME.
+#' @description Return data.frame with Correlation, MeanBias, SD, RSME and wilcoxon p.value
 #' @param dfobs data.frame in long format with columns must be Station, x and time
 #' @param dfmod data.frame in long format with columns must be Station, x and time
 #' @param x Character; name of the column with the parameter
 #' @param Station Character; name of the column with the stations
 #' @param time Character; name of the time column with class POSIXct.
 #' @param time_spinup Character; time to filter
-#' @importFrom stats cor sd
+#' @importFrom stats cor sd wilcox.test
 #' @return Return data.framee or list of raster and df
 #' @export
 #' @examples \dontrun{
@@ -50,7 +50,8 @@ verify <- function(dfobs,
                        cor_pvalue = stats::cor.test(dx$obs, dx$mod)$p.value,
                        MeanBias = mean(dx$obs - dx$mod),
                        MSE = mean((dx$obs - dx$mod)^2),
-                       SD = stats::sd(dx$obs - dx$mod))
+                       SD = stats::sd(dx$obs - dx$mod),
+                       wil = stats::wilcox.test(dx$obs, dx$mod)$p.value)
       df$RMSE <- round(df$MSE^0.5, 2)
       df$Correlation <- round(df$Correlation, 2)
       df$MeanBias <- round(df$MeanBias, 2)
@@ -78,7 +79,8 @@ verify <- function(dfobs,
                        cor_pvalue = stats::cor.test(dx$obs, dx$mod)$p.value,
                        MeanBias = mean(dx$obs - dx$mod),
                        MSE = mean((dx$obs - dx$mod)^2),
-                       SD = sd(dx$obs - dx$mod))
+                       SD = stats::sd(dx$obs - dx$mod),
+                       wil = stats::wilcox.test(dx$obs, dx$mod)$p.value)
       df$RMSE <- round(df$MSE^0.5, 2)
       df$Correlation <- round(df$Correlation, 2)
       df$MeanBias <- round(df$MeanBias, 2)
