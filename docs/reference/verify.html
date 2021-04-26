@@ -120,7 +120,16 @@
     <p>Return data.frame with Correlation, MeanBias, SD, RSME and wilcoxon p.value</p>
     </div>
 
-    <pre class="usage"><span class='fu'>verify</span><span class='op'>(</span><span class='va'>dfobs</span>, <span class='va'>dfmod</span>, <span class='va'>x</span>, Station <span class='op'>=</span> <span class='st'>"Station"</span>, time <span class='op'>=</span> <span class='st'>"LT"</span>, <span class='va'>time_spinup</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>verify</span><span class='op'>(</span>
+  <span class='va'>dfobs</span>,
+  <span class='va'>dfmod</span>,
+  <span class='va'>x</span>,
+  Station <span class='op'>=</span> <span class='st'>"Station"</span>,
+  time <span class='op'>=</span> <span class='st'>"LT"</span>,
+  <span class='va'>time_spinup</span>,
+  conf.level.p <span class='op'>=</span> <span class='fl'>0.95</span>,
+  conf.level.w <span class='op'>=</span> <span class='fl'>0.95</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,6 +157,16 @@
     <tr>
       <th>time_spinup</th>
       <td><p>Character; time to filter</p></td>
+    </tr>
+    <tr>
+      <th>conf.level.p</th>
+      <td><p>Pearson confidence level for the returned confidence interval.
+Currently only used for the Pearson product moment correlation coefficient
+if there are at least 4 complete pairs of observations. default = 0.95</p></td>
+    </tr>
+    <tr>
+      <th>conf.level.w</th>
+      <td><p>Wilcox confidence level of the interval. default = 0.95</p></td>
     </tr>
     </table>
 

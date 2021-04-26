@@ -4,7 +4,16 @@
 \alias{verify}
 \title{Compare observations and simulations and apply wilcoxon R test}
 \usage{
-verify(dfobs, dfmod, x, Station = "Station", time = "LT", time_spinup)
+verify(
+  dfobs,
+  dfmod,
+  x,
+  Station = "Station",
+  time = "LT",
+  time_spinup,
+  conf.level.p = 0.95,
+  conf.level.w = 0.95
+)
 }
 \arguments{
 \item{dfobs}{data.frame in long format with columns must be Station, x and time}
@@ -18,6 +27,12 @@ verify(dfobs, dfmod, x, Station = "Station", time = "LT", time_spinup)
 \item{time}{Character; name of the time column with class POSIXct.}
 
 \item{time_spinup}{Character; time to filter}
+
+\item{conf.level.p}{Pearson confidence level for the returned confidence interval.
+Currently only used for the Pearson product moment correlation coefficient
+if there are at least 4 complete pairs of observations. default = 0.95}
+
+\item{conf.level.w}{Wilcox confidence level of the interval. default = 0.95}
 }
 \value{
 Return data.framee or list of raster and df

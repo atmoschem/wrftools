@@ -7,6 +7,10 @@
 #' @param Station Character; name of the column with the stations
 #' @param time Character; name of the time column with class POSIXct.
 #' @param time_spinup Character; time to filter
+#' @param conf.level.p Pearson confidence level for the returned confidence interval.
+#' Currently only used for the Pearson product moment correlation coefficient
+#' if there are at least 4 complete pairs of observations. default = 0.95
+#' @param conf.level.w Wilcox confidence level of the interval. default = 0.95
 #' @importFrom stats cor sd wilcox.test
 #' @return Return data.framee or list of raster and df
 #' @export
@@ -23,7 +27,9 @@ verify <- function(dfobs,
                    x,
                    Station = "Station",
                    time = "LT",
-                   time_spinup){# = ISOdatetime(2016,4,8,12,0,0),
+                   time_spinup,
+                   conf.level.p = 0.95,
+                   conf.level.w = 0.95){# = ISOdatetime(2016,4,8,12,0,0),
 
   if(length(names(dfobs)) > 3) stop("Columns of dfobs must be Station, x and time")
   if(length(names(dfmod)) > 3) stop("Columns of dfmod must be Station, x and time")
@@ -47,11 +53,11 @@ verify <- function(dfobs,
 
       df <- data.frame(Station = unique(dfobs[[Station]])[i],
                        Correlation = stats::cor(dx$obs, dx$mod),
-                       cor_pvalue = stats::cor.test(dx$obs, dx$mod)$p.value,
+                       cor_pvalue = stats::cor.test(dx$obs, dx$mod, conf.level = conf.level.p)$p.value,
                        MeanBias = mean(dx$obs - dx$mod),
                        MSE = mean((dx$obs - dx$mod)^2),
                        SD = stats::sd(dx$obs - dx$mod),
-                       wil = stats::wilcox.test(dx$obs, dx$mod)$p.value)
+                       wil = stats::wilcox.test(dx$obs, dx$mod, conf.level = conf.level.w)$p.value)
       df$RMSE <- round(df$MSE^0.5, 2)
       df$Correlation <- round(df$Correlation, 2)
       df$MeanBias <- round(df$MeanBias, 2)
@@ -76,11 +82,11 @@ verify <- function(dfobs,
 
       df <- data.frame(Station = unique(dfobs[[Station]])[i],
                        Correlation = cor(dx$obs, dx$mod),
-                       cor_pvalue = stats::cor.test(dx$obs, dx$mod)$p.value,
+                       cor_pvalue = stats::cor.test(dx$obs, dx$mod, conf.level = conf.level.p)$p.value,
                        MeanBias = mean(dx$obs - dx$mod),
                        MSE = mean((dx$obs - dx$mod)^2),
                        SD = stats::sd(dx$obs - dx$mod),
-                       wil = stats::wilcox.test(dx$obs, dx$mod)$p.value)
+                       wil = stats::wilcox.test(dx$obs, dx$mod, conf.level = conf.level.w)$p.value)
       df$RMSE <- round(df$MSE^0.5, 2)
       df$Correlation <- round(df$Correlation, 2)
       df$MeanBias <- round(df$MeanBias, 2)
