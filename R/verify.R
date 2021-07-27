@@ -12,6 +12,7 @@
 #' if there are at least 4 complete pairs of observations. default = 0.95
 #' @param conf.level.w Wilcox confidence level of the interval. default = 0.95
 #' @importFrom stats cor sd wilcox.test
+#' @importFrom data.table rbindlist
 #' @return Return data.framee or list of raster and df
 #' @export
 #' @examples \dontrun{
@@ -54,16 +55,16 @@ verify <- function(dfobs,
       df <- data.frame(Station = unique(dfobs[[Station]])[i],
                        Correlation = stats::cor(dx$obs, dx$mod),
                        cor_pvalue = stats::cor.test(dx$obs, dx$mod, conf.level = conf.level.p)$p.value,
-                       MeanBias = mean(dx$obs - dx$mod),
-                       MSE = mean((dx$obs - dx$mod)^2),
+                       MeanBias = mean(dx$mod - dx$obs),
+                       MSE = mean((dx$mod - dx$obs)^2),
                        SD = stats::sd(dx$obs - dx$mod),
                        wil = stats::wilcox.test(dx$obs, dx$mod, conf.level = conf.level.w)$p.value)
-      df$RMSE <- round(df$MSE^0.5, 2)
-      df$Correlation <- round(df$Correlation, 2)
-      df$MeanBias <- round(df$MeanBias, 2)
-      df$SD <- round(df$SD, 2)
-      df$MSE <- NULL
-      df$RMSE <- round(df$RMSE, 2)
+      # df$RMSE <- round(df$MSE^0.5, 2)
+      # df$Correlation <- round(df$Correlation, 2)
+      # df$MeanBias <- round(df$MeanBias, 2)
+      # df$SD <- round(df$SD, 2)
+      # df$MSE <- NULL
+      # df$RMSE <- round(df$RMSE, 2)
       df
     })
   } else {
@@ -83,21 +84,21 @@ verify <- function(dfobs,
       df <- data.frame(Station = unique(dfobs[[Station]])[i],
                        Correlation = cor(dx$obs, dx$mod),
                        cor_pvalue = stats::cor.test(dx$obs, dx$mod, conf.level = conf.level.p)$p.value,
-                       MeanBias = mean(dx$obs - dx$mod),
-                       MSE = mean((dx$obs - dx$mod)^2),
-                       SD = stats::sd(dx$obs - dx$mod),
+                       MeanBias = mean(dx$mod - dx$obs),
+                       MSE = mean((dx$mod - dx$obs)^2),
+                       SD = stats::sd(dx$mod - dx$obs),
                        wil = stats::wilcox.test(dx$obs, dx$mod, conf.level = conf.level.w)$p.value)
-      df$RMSE <- round(df$MSE^0.5, 2)
-      df$Correlation <- round(df$Correlation, 2)
-      df$MeanBias <- round(df$MeanBias, 2)
-      df$SD <- round(df$SD, 2)
-      df$MSE <- NULL
-      df$RMSE <- round(df$RMSE, 2)
+      # df$RMSE <- round(df$MSE^0.5, 2)
+      # df$Correlation <- round(df$Correlation, 2)
+      # df$MeanBias <- round(df$MeanBias, 2)
+      # df$SD <- round(df$SD, 2)
+      # df$MSE <- NULL
+      # df$RMSE <- round(df$RMSE, 2)
       df
     })
 
   }
 
-  dfi <- as.data.frame(do.call("rbind", dfi))
+  dfi <- data.table::rbindlist(dfi)
   return(dfi)
 }
