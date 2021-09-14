@@ -44,8 +44,8 @@ Return data.frame with Correlation, MeanBias, SD, RSME and wilcoxon p.value
 \dontrun{
 # do not run
 # Columns must be Station, x and time
-verify(dfobs = df_co[df_co$data == "CETESB", 1:3],
-       dfmod = df_co[df_co$data == "2016", 1:3],
+verify(dfmod = df_co[df_co$data == "CETESB", 1:3],
+       dfobs = df_co[df_co$data == "2016", 1:3],
        x = "co",
        time_spinup = ISOdatetime(2016,4,8,12,0,0))
 }
