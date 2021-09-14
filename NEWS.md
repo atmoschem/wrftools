@@ -1,6 +1,9 @@
 NEWS
 ===========
 
+# vein 0.4.9 (Release date: 2021-08-07)
+- verify now is mod - obs
+
 # vein 0.4.8 (Release date: 2021-04-07)
 
 - Adds extractor_raster

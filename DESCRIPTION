@@ -2,7 +2,7 @@ Package: wrftools
 Type: Package
 Date: 2021-04-07
 Title: Provide tools to run WRF
-Version: 0.4.8
+Version: 0.4.5
 Authors@R: person(given = "Sergio", family = "Ibarra-Espinosa", role = c("aut", "cre"), email = "sergio.ibarra@usp.br", comment = c(ORCID = "0000-0002-3162-1905"))
 Description: It provide tools to the WRF user including dynamic maps your domains, extracting information in a ggplot2-friendly way, and project your data.
 URL: https://github.com/atmoschem/wrftools
