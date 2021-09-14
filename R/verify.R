@@ -53,7 +53,6 @@ verify <- function(dfobs,
       names(dx) <- c("LT", "obs", "mod")
 
       df <- data.frame(Station = unique(dfobs[[Station]])[i],
-<<<<<<< HEAD
                        Correlation = stats::cor(dx$mod, dx$obs),
                        cor_pvalue = stats::cor.test(dx$mod, dx$obs, conf.level = conf.level.p)$p.value,
                        MeanBias = mean(dx$mod - dx$obs),
@@ -66,20 +65,6 @@ verify <- function(dfobs,
       df$SD <- round(df$SD, 2)
       df$MSE <- NULL
       df$RMSE <- round(df$RMSE, 2)
-=======
-                       Correlation = stats::cor(dx$obs, dx$mod),
-                       cor_pvalue = stats::cor.test(dx$obs, dx$mod, conf.level = conf.level.p)$p.value,
-                       MeanBias = mean(dx$mod - dx$obs),
-                       MSE = mean((dx$mod - dx$obs)^2),
-                       SD = stats::sd(dx$obs - dx$mod),
-                       wil = stats::wilcox.test(dx$obs, dx$mod, conf.level = conf.level.w)$p.value)
-      # df$RMSE <- round(df$MSE^0.5, 2)
-      # df$Correlation <- round(df$Correlation, 2)
-      # df$MeanBias <- round(df$MeanBias, 2)
-      # df$SD <- round(df$SD, 2)
-      # df$MSE <- NULL
-      # df$RMSE <- round(df$RMSE, 2)
->>>>>>> master
       df
     })
   } else {
@@ -97,7 +82,6 @@ verify <- function(dfobs,
       names(dx) <- c("LT", "obs", "mod")
 
       df <- data.frame(Station = unique(dfobs[[Station]])[i],
-<<<<<<< HEAD
                        Correlation = cor(dx$mod, dx$obs),
                        cor_pvalue = stats::cor.test(dx$mod, dx$obs, conf.level = conf.level.p)$p.value,
                        MeanBias = mean(dx$mod - dx$obs),
@@ -110,29 +94,11 @@ verify <- function(dfobs,
       df$SD <- round(df$SD, 2)
       df$MSE <- NULL
       df$RMSE <- round(df$RMSE, 2)
-=======
-                       Correlation = cor(dx$obs, dx$mod),
-                       cor_pvalue = stats::cor.test(dx$obs, dx$mod, conf.level = conf.level.p)$p.value,
-                       MeanBias = mean(dx$mod - dx$obs),
-                       MSE = mean((dx$mod - dx$obs)^2),
-                       SD = stats::sd(dx$mod - dx$obs),
-                       wil = stats::wilcox.test(dx$obs, dx$mod, conf.level = conf.level.w)$p.value)
-      # df$RMSE <- round(df$MSE^0.5, 2)
-      # df$Correlation <- round(df$Correlation, 2)
-      # df$MeanBias <- round(df$MeanBias, 2)
-      # df$SD <- round(df$SD, 2)
-      # df$MSE <- NULL
-      # df$RMSE <- round(df$RMSE, 2)
->>>>>>> master
       df
     })
 
   }
 
-<<<<<<< HEAD
-  dfi <- data.table::rbindlist("rbind", dfi)
-=======
   dfi <- data.table::rbindlist(dfi)
->>>>>>> master
   return(dfi)
 }
