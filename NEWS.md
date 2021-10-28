@@ -3,6 +3,7 @@ NEWS
 
 # vein 0.4.9 (Release date: 2021-08-07)
 - verify now is mod - obs
+- add curitiba surface stations (2021-10-27)
 
 # vein 0.4.8 (Release date: 2021-04-07)
 
